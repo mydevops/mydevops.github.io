@@ -84,12 +84,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="DMM">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="线程池 threadpool虽然线程的开销相对于相对进程而言是微小的，但是如果频繁的创建和销毁线程的这部分损耗可以被避免掉，对于性能的提升是很有必要的。
+实现线程池线程池简单来说就是线程+队列。
+12345678910111213141516171819202122232425262728293031323334353637383940414243# -*- coding: UTF-8 -*-im">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 线程池">
+<meta property="og:url" content="http://yoursite.com/2016/12/02/Python-线程池/index.html">
 <meta property="og:site_name" content="DMM">
+<meta property="og:description" content="线程池 threadpool虽然线程的开销相对于相对进程而言是微小的，但是如果频繁的创建和销毁线程的这部分损耗可以被避免掉，对于性能的提升是很有必要的。
+实现线程池线程池简单来说就是线程+队列。
+12345678910111213141516171819202122232425262728293031323334353637383940414243# -*- coding: UTF-8 -*-im">
+<meta property="og:updated_time" content="2016-12-02T09:55:53.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DMM">
+<meta name="twitter:title" content="Python 线程池">
+<meta name="twitter:description" content="线程池 threadpool虽然线程的开销相对于相对进程而言是微小的，但是如果频繁的创建和销毁线程的这部分损耗可以被避免掉，对于性能的提升是很有必要的。
+实现线程池线程池简单来说就是线程+队列。
+12345678910111213141516171819202122232425262728293031323334353637383940414243# -*- coding: UTF-8 -*-im">
 
 
 
@@ -107,7 +117,7 @@
   };
 </script>
 
-  <title> DMM </title>
+  <title> Python 线程池 | DMM </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -128,9 +138,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -201,9 +209,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -223,10 +231,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/12/02/Python-线程池/" itemprop="url">
-                  Python 线程池
-                </a>
+                Python 线程池
               
             
           </h1>
@@ -285,9 +290,7 @@
       
 
       
-        
-          
-            <h1 id="线程池-threadpool"><a href="#线程池-threadpool" class="headerlink" title="线程池 threadpool"></a>线程池 threadpool</h1><p>虽然线程的开销相对于相对进程而言是微小的，但是如果频繁的创建和销毁线程的这部分损耗可以被避免掉，对于性能的提升是很有必要的。</p>
+        <h1 id="线程池-threadpool"><a href="#线程池-threadpool" class="headerlink" title="线程池 threadpool"></a>线程池 threadpool</h1><p>虽然线程的开销相对于相对进程而言是微小的，但是如果频繁的创建和销毁线程的这部分损耗可以被避免掉，对于性能的提升是很有必要的。</p>
 <h2 id="实现线程池"><a href="#实现线程池" class="headerlink" title="实现线程池"></a>实现线程池</h2><p>线程池简单来说就是线程<code>+</code>队列。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> Queue</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Worker</span><span class="params">(threading.Thread)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, queue)</span>:</span></div><div class="line">        super(Worker, self).__init__()</div><div class="line">        self.__queue = queue</div><div class="line">        self.setDaemon(<span class="keyword">True</span>)</div><div class="line">        self.start()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">            function, args, kwargs = self.__queue.get()</div><div class="line">            function(*args, **kwargs)</div><div class="line">            <span class="keyword">print</span> <span class="string">"Thread Name: &#123;&#125;"</span>.format(self.name)</div><div class="line">            self.__queue.task_done()</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, num_workers)</span>:</span></div><div class="line">        self.__queue = Queue.Queue(num_workers)</div><div class="line">        [ Worker(self.__queue) <span class="keyword">for</span> _ <span class="keyword">in</span> range(num_workers) ]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">spawn</span><span class="params">(self, f, *args, **kwargs)</span>:</span></div><div class="line">        self.__queue.put((f, args, kwargs))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></div><div class="line">        self.__queue.join()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_function</span><span class="params">(number)</span>:</span></div><div class="line">    time.sleep(<span class="number">1</span>)</div><div class="line">    <span class="keyword">return</span> number</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    pool = ThreadPool(<span class="number">5</span>)</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">12</span>):</div><div class="line">        pool.spawn(test_function, number)</div><div class="line">    </div><div class="line">    pool.wait()</div></pre></td></tr></table></figure>
 <p>输出结果：</p>
@@ -343,16 +346,19 @@
 <li>跟踪信息：<code>traceback</code>对象，可以显示错误的行号等等具体的错误信息。</li>
 </ul>
 
-          
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
@@ -360,249 +366,32 @@
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/12/01/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/12/01/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-12-01T18:23:15+08:00" content="2016-12-01">
-              2016-12-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/01/hello-world/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/01/test01/" itemprop="url">
-                  test01
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-12-01T18:19:21+08:00" content="2016-12-01">
-              2016-12-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Python demo<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/01/test01/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -610,6 +399,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -769,6 +562,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
