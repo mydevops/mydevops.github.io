@@ -1,0 +1,629 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Python 多线程在CPython解释器中：由于GIL的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核CPU那么建议使用multiprocessing模块。但是IO密集型任务多线程仍然是一个很好的选择。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Python 2] Python 多线程">
+<meta property="og:url" content="http://yoursite.com/2016/12/07/Python-2-Python-多线程/index.html">
+<meta property="og:site_name" content="DMM">
+<meta property="og:description" content="Python 多线程在CPython解释器中：由于GIL的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核CPU那么建议使用multiprocessing模块。但是IO密集型任务多线程仍然是一个很好的选择。">
+<meta property="og:updated_time" content="2016-12-07T05:44:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Python 2] Python 多线程">
+<meta name="twitter:description" content="Python 多线程在CPython解释器中：由于GIL的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核CPU那么建议使用multiprocessing模块。但是IO密集型任务多线程仍然是一个很好的选择。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+  <title> [Python 2] Python 多线程 | DMM </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">DMM</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-python">
+          <a href="/categories/python" rel="section">
+            
+            Python
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [Python 2] Python 多线程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-12-07T09:14:01+08:00" content="2016-12-07">
+              2016-12-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Python-多线程"><a href="#Python-多线程" class="headerlink" title="Python 多线程"></a>Python 多线程</h1><p>在<code>CPython</code>解释器中：由于<code>GIL</code>的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核<code>CPU</code>那么建议使用<code>multiprocessing</code>模块。但是<code>IO</code>密集型任务多线程仍然是一个很好的选择。</p>
+<a id="more"></a>
+<p><code>Python</code>中使用<code>threading</code>模块实现了多线程，<code>threading</code>模块提供了如下的函数和对象。</p>
+<h2 id="threading"><a href="#threading" class="headerlink" title="threading"></a>threading</h2><h3 id="threading-Thread"><a href="#threading-Thread" class="headerlink" title="threading.Thread()"></a>threading.Thread()</h3><p>用于在主线程中个创建一个线程，创建的方式有两种：</p>
+<p>第一种：重写此类的<code>__init__()</code>和<code>run()</code>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThreading</span><span class="params">(threading.Thread)</span>:</span></div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        threading.Thread.__init__(self) <span class="comment"># 必须要调用父类的构造函数</span></div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line">        <span class="comment"># do something</span></div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    t = MyThreading()</div><div class="line">    t.start()</div></pre></td></tr></table></figure>
+<p>第二种：直接启动</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*-</div><div class="line"></div><div class="line">import threading</div><div class="line"></div><div class="line">def run():</div><div class="line">    pass</div><div class="line">    # do something</div><div class="line"></div><div class="line">if __name__ == "__main__""</div><div class="line">    t = threading.Thread(target=run)</div><div class="line">    t.start()</div></pre></td></tr></table></figure>
+<p>实例化<code>Thread</code>对象后必须通过<code>start()</code>方法来启动这个线程，线程启动后会自动调用<code>run()</code>方法。</p>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><p><code>__init__(target=None, name=None, args=(), kwargs={})</code></p>
+<ul>
+<li><code>target</code>：函数名称，在线程启动后执行的函数。</li>
+<li><code>name</code>：线程名称，默认是<code>Thread-N</code>格式的名字，<code>N</code>是一个十进制数字。</li>
+<li><code>args</code>：<code>target</code>指定函数的位置参数列表，接收一个元组。</li>
+<li><code>kwargs</code>：<code>target</code>指定函数的关键字参数列表，接收一个字典。</li>
+</ul>
+<h4 id="start"><a href="#start" class="headerlink" title="start()"></a>start()</h4><p>启动线程。</p>
+<h4 id="run"><a href="#run" class="headerlink" title="run()"></a>run()</h4><p>通过继承方式创建线程时必须重写此方法。一旦启动一个线程之后，就认为这个线程是激活状态，直到<code>run()</code>方法执行完毕或者引发一个未处理异常时此线程被终止。<code>is_alive()</code>方法可以查看这个线程是否处于激活状态。                       </p>
+<h4 id="join-timeout"><a href="#join-timeout" class="headerlink" title="join([timeout])"></a>join([timeout])</h4><p>等待线程结束，一直阻塞到线程正常结束或者有一个未处理的异常或者超时时间到了。若<code>timeout</code>生效，必须使除主线程以外的其他线程为守护线程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"run method start .."</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"Task ID: &#123;&#125;"</span>.format(number)</div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> <span class="string">"run method end .."</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    start_time = time.time()</div><div class="line">    thread_list = []</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">51</span>):</div><div class="line">        t = threading.Thread(target=run, args=(number,))</div><div class="line">        t.start()</div><div class="line">        thread_list.append(t)</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> thread_list ]</div><div class="line">    <span class="keyword">print</span> <span class="string">"run time: &#123;&#125;"</span>.format(time.time() - start_time)</div></pre></td></tr></table></figure>
+<h4 id="name"><a href="#name" class="headerlink" title="name"></a>name</h4><p>线程名称。</p>
+<h4 id="getName"><a href="#getName" class="headerlink" title="getName()"></a>getName()</h4><p>获取线程名称。</p>
+<h4 id="setName"><a href="#setName" class="headerlink" title="setName()"></a>setName()</h4><p>设置线程名称。</p>
+<h4 id="ident"><a href="#ident" class="headerlink" title="ident"></a>ident</h4><p>线程<code>ID</code>。</p>
+<h4 id="isAlive"><a href="#isAlive" class="headerlink" title="isAlive()"></a>isAlive()</h4><p>返回线程是否激活状态。</p>
+<h4 id="daemon"><a href="#daemon" class="headerlink" title="daemon"></a>daemon</h4><p>标识线程是否为守护线程：是(<code>True</code>)，否(<code>False</code>)，该方法必须在<code>start()</code>方法前执行。它的初始值是从创建它的线程继承的。主线程默认是<code>daemon = False</code>，所以由主线程创建的线程默认<code>daemon = False</code>。</p>
+<h4 id="isDaemon"><a href="#isDaemon" class="headerlink" title="isDaemon()"></a>isDaemon()</h4><p>判断线程是否是守护线程。</p>
+<h4 id="setDaemon"><a href="#setDaemon" class="headerlink" title="setDaemon()"></a>setDaemon()</h4><p>设置线程是否为守护线程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"run method start .."</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"Task ID: &#123;&#125;"</span>.format(number)</div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> <span class="string">"run method end .."</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    start_time = time.time()</div><div class="line">    thread_list = []</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">51</span>):</div><div class="line">        t = threading.Thread(target=run, args=(number,))</div><div class="line">        t.setDaemon(<span class="keyword">True</span>)</div><div class="line">        t.start()</div><div class="line">        thread_list.append(t)</div><div class="line">    <span class="keyword">print</span> <span class="string">"run time: &#123;&#125;"</span>.format(time.time() - start_time)</div></pre></td></tr></table></figure>
+<h3 id="threading-enumerate"><a href="#threading-enumerate" class="headerlink" title="threading.enumerate()"></a>threading.enumerate()</h3><p>返回当前激活状态的<code>Thread</code>对象的列表，包含守护线程和主线程。</p>
+<h3 id="threading-activeCount"><a href="#threading-activeCount" class="headerlink" title="threading.activeCount()"></a>threading.activeCount()</h3><p>返回当前激活状态的<code>Thread</code>对象的数量，这个数量等同于<code>enumerate()</code>方法返回的列表的长度。</p>
+<h3 id="threading-Lock"><a href="#threading-Lock" class="headerlink" title="threading.Lock()"></a>threading.Lock()</h3><p>互斥锁，避免多个线程同时修改同一块数据。</p>
+<h4 id="acquire"><a href="#acquire" class="headerlink" title="acquire()"></a>acquire()</h4><p>加锁。</p>
+<h4 id="release"><a href="#release" class="headerlink" title="release()"></a>release()</h4><p>解锁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line">    </div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">()</span>:</span></div><div class="line">    lock.acquire()</div><div class="line">    <span class="keyword">global</span> number</div><div class="line">    number += <span class="number">1</span></div><div class="line">    lock.release()</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    lock = threading.Lock()</div><div class="line">    number = <span class="number">0</span></div><div class="line">    threading_list = []</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10000</span>):</div><div class="line">        t = threading.Thread(target=add)</div><div class="line">        threading_list.append(t)</div><div class="line">        t.start()</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> threading_list ]</div><div class="line">    <span class="keyword">print</span> number</div></pre></td></tr></table></figure>
+<h3 id="threading-RLock"><a href="#threading-RLock" class="headerlink" title="threading.RLock()"></a>threading.RLock()</h3><p>递归锁。</p>
+<h4 id="acquire-1"><a href="#acquire-1" class="headerlink" title="acquire()"></a>acquire()</h4><p>加锁。</p>
+<h4 id="release-1"><a href="#release-1" class="headerlink" title="release()"></a>release()</h4><p>解锁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line">    </div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run2</span><span class="params">()</span>:</span></div><div class="line">    lock.acquire()</div><div class="line">    <span class="keyword">print</span> <span class="string">"run run2 method~"</span></div><div class="line">    lock.release()</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run1</span><span class="params">()</span>:</span></div><div class="line">    lock.acquire()</div><div class="line">    <span class="keyword">print</span> <span class="string">"run run1 method~"</span></div><div class="line">    run2()</div><div class="line">    lock.release()</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    lock = threading.RLock()</div><div class="line">    t = threading.Thread(target=run1)</div><div class="line">    t.start()</div><div class="line">    t.join()</div></pre></td></tr></table></figure>
+<h3 id="threading-BoundedSemaphore-value"><a href="#threading-BoundedSemaphore-value" class="headerlink" title="threading.BoundedSemaphore([value])"></a>threading.BoundedSemaphore([value])</h3><p>信号量，用于控制线程数量。</p>
+<h4 id="acquire-2"><a href="#acquire-2" class="headerlink" title="acquire()"></a>acquire()</h4><p>加锁。</p>
+<h4 id="release-2"><a href="#release-2" class="headerlink" title="release()"></a>release()</h4><p>解锁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(number)</span>:</span></div><div class="line">    semaphore.acquire()</div><div class="line">    <span class="keyword">print</span> <span class="string">"Task ID:&#123;&#125;"</span>.format(number)</div><div class="line">    time.sleep(<span class="number">1</span>)</div><div class="line">    semaphore.release()</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    semaphore = threading.BoundedSemaphore(<span class="number">5</span>)</div><div class="line">    threading_list = []</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">21</span>):</div><div class="line">        t = threading.Thread(target=run, args=(number,))</div><div class="line">        t.start()</div><div class="line">        threading_list.append(t)</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> threading_list ]</div></pre></td></tr></table></figure>
+<h3 id="with"><a href="#with" class="headerlink" title="with"></a>with</h3><p><code>Lock</code>、<code>RLock</code>和<code>BoundedSemaphore</code>对象可以用作<code>with</code>语句的上下文管理器。进入该代码块时将调用<code>acquire()</code> 方法，退出代码块时则调用<code>release()</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line">    </div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">()</span>:</span></div><div class="line">    lock.acquire()</div><div class="line">    <span class="keyword">global</span> number</div><div class="line">    number += <span class="number">1</span></div><div class="line">    lock.release()</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    lock = threading.Lock()</div><div class="line">    number = <span class="number">0</span></div><div class="line">    threading_list = []</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10000</span>):</div><div class="line">        t = threading.Thread(target=add)</div><div class="line">        threading_list.append(t)</div><div class="line">        t.start()</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> threading_list ]</div><div class="line">    <span class="keyword">print</span> number</div></pre></td></tr></table></figure>
+<p>等同于：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line">    </div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">with</span> lock:</div><div class="line">        <span class="keyword">global</span> number</div><div class="line">        number += <span class="number">1</span></div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    lock = threading.Lock()</div><div class="line">    number = <span class="number">0</span></div><div class="line">    threading_list = []</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10000</span>):</div><div class="line">        t = threading.Thread(target=add)</div><div class="line">        threading_list.append(t)</div><div class="line">        t.start()</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> threading_list ]</div><div class="line">    <span class="keyword">print</span> number</div></pre></td></tr></table></figure>
+<h3 id="threading-Event"><a href="#threading-Event" class="headerlink" title="threading.Event()"></a>threading.Event()</h3><p>事件对象是线程间最简单的通信机制之一。每个事件对象管理一个内部标志，可以在事件对象上调用<code>set()</code>方法将内部标志设为<code>true</code>，调用<code>clear()</code>方法将内部标志重置为<code>false</code>。在事件对象调用<code>wait()</code>方法时，线程将阻塞直到事件对象的内部标志被设为<code>true</code>。</p>
+<h4 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h4><p>设置标记为 True。</p>
+<h4 id="clear"><a href="#clear" class="headerlink" title="clear()"></a>clear()</h4><p>设置标记为 False。</p>
+<h4 id="wait"><a href="#wait" class="headerlink" title="wait()"></a>wait()</h4><p>在事件对象调用<code>wait()</code>方法时，线程将阻塞直到内部标志被设置为<code>True</code>。</p>
+<h4 id="isSet"><a href="#isSet" class="headerlink" title="isSet()"></a>isSet()</h4><p>判断标记是否被设置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">light</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    3s 红灯</div><div class="line">    2s 绿灯</div><div class="line">    1s 黄灯</div><div class="line">    """</div><div class="line">    <span class="keyword">global</span> event</div><div class="line">    i = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">if</span> i &lt; <span class="number">3</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"\033[41;1m红灯\033[0m"</span></div><div class="line">            event.clear()</div><div class="line">        <span class="keyword">elif</span> i &lt; <span class="number">5</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"\033[42;1m绿灯\033[0m"</span></div><div class="line">            event.set()</div><div class="line">        <span class="keyword">elif</span> i &lt; <span class="number">6</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"\033[43;1m黄灯\033[0m"</span></div><div class="line">            event.set()</div><div class="line">            i = <span class="number">-1</span></div><div class="line">        i += <span class="number">1</span></div><div class="line">        time.sleep(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">car</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">global</span> event</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">if</span> event.isSet():</div><div class="line">            <span class="keyword">print</span> <span class="string">"汽车[&#123;&#125;]奔跑。。"</span>.format(number)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"汽车[&#123;&#125;]等待。。"</span>.format(number)</div><div class="line">        time.sleep(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    event = threading.Event()</div><div class="line">    l = threading.Thread(target=light)</div><div class="line">    l.start()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">6</span>):</div><div class="line">        c = threading.Thread(target=car, args=(i,))</div><div class="line">        c.start()</div></pre></td></tr></table></figure>
+<h3 id="threading-local"><a href="#threading-local" class="headerlink" title="threading.local()"></a>threading.local()</h3><p>为多个线程提供不同享空间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">global</span> local</div><div class="line">    <span class="keyword">print</span> <span class="string">"BEGIN local: &#123;&#125;"</span>.format(local.__dict__)</div><div class="line">    local.name = number</div><div class="line">    <span class="keyword">print</span> <span class="string">"END local: &#123;&#125;"</span>.format(local.__dict__)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    local = threading.local()</div><div class="line">    <span class="keyword">print</span> local.__dict__</div><div class="line">    local.name = <span class="string">"MAIN"</span></div><div class="line">    <span class="keyword">print</span> local.__dict__</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">3</span>):</div><div class="line">        t = threading.Thread(target=run, args=(number,))</div><div class="line">        t.start()</div></pre></td></tr></table></figure>
+<h3 id="threading-Timer"><a href="#threading-Timer" class="headerlink" title="threading.Timer()"></a>threading.Timer()</h3><p>定时器，一个线程，它在一个指定的时间间隔之后执行一个函数。</p>
+<h4 id="构造函数-1"><a href="#构造函数-1" class="headerlink" title="构造函数"></a>构造函数</h4><p><code>__init__(interval, function, args=[], kwargs={}</code></p>
+<ul>
+<li><code>interval</code>：秒之后执行函数</li>
+<li><code>function</code>：执行的函数名称</li>
+<li><code>args</code>：位置参数</li>
+<li><code>kwargs</code>：关键字参数</li>
+</ul>
+<h4 id="cancel"><a href="#cancel" class="headerlink" title="cancel()"></a>cancel()</h4><p>取消定时器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"hello world~"</span></div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    timer = threading.Timer(<span class="number">2</span>, run)</div><div class="line">    timer.start()</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/05/Python-2-Python-线程池/" rel="next" title="[Python 2] Python 线程池">
+                <i class="fa fa-chevron-left"></i> [Python 2] Python 线程池
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/9565828?v=3&u=38c74edce4a8f3f5c92fb238bb23673b369d33b1&s=400"
+               alt="DMM" />
+          <p class="site-author-name" itemprop="name">DMM</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mydevops" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-多线程"><span class="nav-number">1.</span> <span class="nav-text">Python 多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#threading"><span class="nav-number">1.1.</span> <span class="nav-text">threading</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-Thread"><span class="nav-number">1.1.1.</span> <span class="nav-text">threading.Thread()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造函数"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#start"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">start()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#run"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">run()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join-timeout"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">join([timeout])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#name"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getName"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">getName()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setName"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">setName()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ident"><span class="nav-number">1.1.1.8.</span> <span class="nav-text">ident</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isAlive"><span class="nav-number">1.1.1.9.</span> <span class="nav-text">isAlive()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#daemon"><span class="nav-number">1.1.1.10.</span> <span class="nav-text">daemon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isDaemon"><span class="nav-number">1.1.1.11.</span> <span class="nav-text">isDaemon()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setDaemon"><span class="nav-number">1.1.1.12.</span> <span class="nav-text">setDaemon()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-enumerate"><span class="nav-number">1.1.2.</span> <span class="nav-text">threading.enumerate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-activeCount"><span class="nav-number">1.1.3.</span> <span class="nav-text">threading.activeCount()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-Lock"><span class="nav-number">1.1.4.</span> <span class="nav-text">threading.Lock()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#acquire"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">acquire()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#release"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">release()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-RLock"><span class="nav-number">1.1.5.</span> <span class="nav-text">threading.RLock()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#acquire-1"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">acquire()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#release-1"><span class="nav-number">1.1.5.2.</span> <span class="nav-text">release()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-BoundedSemaphore-value"><span class="nav-number">1.1.6.</span> <span class="nav-text">threading.BoundedSemaphore([value])</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#acquire-2"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">acquire()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#release-2"><span class="nav-number">1.1.6.2.</span> <span class="nav-text">release()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#with"><span class="nav-number">1.1.7.</span> <span class="nav-text">with</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-Event"><span class="nav-number">1.1.8.</span> <span class="nav-text">threading.Event()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">1.1.8.1.</span> <span class="nav-text">set()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clear"><span class="nav-number">1.1.8.2.</span> <span class="nav-text">clear()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wait"><span class="nav-number">1.1.8.3.</span> <span class="nav-text">wait()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isSet"><span class="nav-number">1.1.8.4.</span> <span class="nav-text">isSet()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-local"><span class="nav-number">1.1.9.</span> <span class="nav-text">threading.local()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-Timer"><span class="nav-number">1.1.10.</span> <span class="nav-text">threading.Timer()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造函数-1"><span class="nav-number">1.1.10.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cancel"><span class="nav-number">1.1.10.2.</span> <span class="nav-text">cancel()</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DMM</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
