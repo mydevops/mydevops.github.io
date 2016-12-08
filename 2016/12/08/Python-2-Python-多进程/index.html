@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="queue模块实现了多生产者、多消费者队列。共实现了三类队列，主要差别在于取得数据的顺序上。">
+<meta name="description" content="Python中多进程使用multiprocessing模块实现。multiprocessing支持使用类似于threading模块的使用方式来创建进程。通过使用子进程而非线程的方式可以避免掉GIL的限制。可以充分的利用多核CPU。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Python 2] Python 线程间通讯">
-<meta property="og:url" content="http://yoursite.com/2016/12/07/Python-2-Python-线程间通讯/index.html">
+<meta property="og:title" content="[Python 2] Python 多进程">
+<meta property="og:url" content="http://yoursite.com/2016/12/08/Python-2-Python-多进程/index.html">
 <meta property="og:site_name" content="DMM">
-<meta property="og:description" content="queue模块实现了多生产者、多消费者队列。共实现了三类队列，主要差别在于取得数据的顺序上。">
-<meta property="og:updated_time" content="2016-12-07T06:07:03.000Z">
+<meta property="og:description" content="Python中多进程使用multiprocessing模块实现。multiprocessing支持使用类似于threading模块的使用方式来创建进程。通过使用子进程而非线程的方式可以避免掉GIL的限制。可以充分的利用多核CPU。">
+<meta property="og:updated_time" content="2016-12-08T13:55:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[Python 2] Python 线程间通讯">
-<meta name="twitter:description" content="queue模块实现了多生产者、多消费者队列。共实现了三类队列，主要差别在于取得数据的顺序上。">
+<meta name="twitter:title" content="[Python 2] Python 多进程">
+<meta name="twitter:description" content="Python中多进程使用multiprocessing模块实现。multiprocessing支持使用类似于threading模块的使用方式来创建进程。通过使用子进程而非线程的方式可以避免掉GIL的限制。可以充分的利用多核CPU。">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> [Python 2] Python 线程间通讯 | DMM </title>
+  <title> [Python 2] Python 多进程 | DMM </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -225,7 +225,7 @@
             
             
               
-                [Python 2] Python 线程间通讯
+                [Python 2] Python 多进程
               
             
           </h1>
@@ -237,8 +237,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-12-07T14:06:25+08:00" content="2016-12-07">
-              2016-12-07
+            <time itemprop="dateCreated" datetime="2016-12-08T21:55:04+08:00" content="2016-12-08">
+              2016-12-08
             </time>
           </span>
 
@@ -284,31 +284,25 @@
       
 
       
-        <p><code>queue</code>模块实现了多生产者、多消费者队列。共实现了三类队列，主要差别在于取得数据的顺序上。</p>
+        <p><code>Python</code>中多进程使用<code>multiprocessing</code>模块实现。<code>multiprocessing</code>支持使用类似于<code>threading</code>模块的使用方式来创建进程。通过使用子进程而非线程的方式可以避免掉<code>GIL</code>的限制。可以充分的利用多核<code>CPU</code>。</p>
 <a id="more"></a>
-<ol>
-<li><code>Queue(maxsize=0)</code>：在<code>FIFO</code>(<code>First In First Out</code>，先进先出)队列中，最早加入的任务会被最先得到。</li>
-<li><code>LifoQueue(maxsize=0)</code>：在<code>LIFO</code>(<code>Last In First Out</code>，后进先出)队列中，最后加入的任务会被最先得到(就像栈一样)。</li>
-<li><code>PriorityQueue(maxsize=0)</code>：在优先队列中，任务被保持有序，拥有最小值的任务（优先级最高）被最先得到。</li>
-</ol>
-<p><code>maxsize</code>是个整数，指明了队列中能存放的数据个数的上限。一旦达到上限，插入会导致阻塞，直到队列中的数据被消费掉。如果<code>maxsize</code>小于或者等于<code>0</code>，队列大小没有限制。</p>
-<p><code>Queue</code>对象常用方法(<code>Queue</code>、<code>LifoQueue</code>、<code>PriorityQueue</code>公用方法)：</p>
-<h4 id="qsize"><a href="#qsize" class="headerlink" title="qsize()"></a>qsize()</h4><p>队列的大小。</p>
-<h4 id="empty"><a href="#empty" class="headerlink" title="empty()"></a>empty()</h4><p>如果队列为空返回<code>True</code>，否则返回<code>False</code>。</p>
-<h4 id="full"><a href="#full" class="headerlink" title="full()"></a>full()</h4><p>如果队列是满的返回<code>True</code>，否则返回<code>False</code>。</p>
-<h4 id="put-item-block-timeout"><a href="#put-item-block-timeout" class="headerlink" title="put(item[, block[, timeout]])"></a>put(item[, block[, timeout]])</h4><p>将<code>item</code>放入队列中。</p>
-<p>如果<code>block</code>为<code>True</code>且<code>timeout</code>为空对象那么阻塞调用，无超时。阻塞调用线程，直到有空闲槽可用。</p>
-<p>如果<code>block</code>为<code>False</code>，如果有空闲槽可用将数据放入队列，否则立即抛出<code>Full</code>异常(非阻塞调用，<code>timeout</code>被忽略)。</p>
-<p>如果<code>timeout</code>是个正整数，阻塞调用进程最多<code>timeout</code>秒，如果一直无空闲槽可用，抛出<code>Full</code>异常(带超时的阻塞调用)。</p>
-<h4 id="put-nowait-item"><a href="#put-nowait-item" class="headerlink" title="put_nowait(item)"></a>put_nowait(item)</h4><p>等同于<code>put(item, False)</code>(非阻塞调用)。</p>
-<h4 id="get-block-timeout"><a href="#get-block-timeout" class="headerlink" title="get([block[, timeout]])"></a>get([block[, timeout]])</h4><p>从队列中移除并返回一个数据。</p>
-<p>如果<code>block</code>为<code>True</code>且<code>timeout</code>为空对象阻塞调用，无超时，阻塞调用进程直到有数据可用。</p>
-<p>如果<code>block</code>为<code>False</code>，如果有数据可用返回数据，否则立即抛出<code>Empty</code>异常(非阻塞调用，<code>timeout</code>被忽略)。        如果<code>timeout</code>是个正整数，阻塞调用进程最多<code>timeout</code>秒，如果一直无数据可用，抛出<code>Empty</code>异常（带超时的阻塞调用）。</p>
-<h4 id="get-nowait"><a href="#get-nowait" class="headerlink" title="get_nowait()"></a>get_nowait()</h4><p>等同于<code>get(False)</code>(非阻塞调用)。</p>
-<h4 id="task-done"><a href="#task-done" class="headerlink" title="task_done()"></a>task_done()</h4><p>意味着之前入队的一个任务已经完成。由队列的消费者线程调用。每一个<code>get()</code>调用得到一个任务, 接下来的 <code>task_done()</code>调用告诉队列该任务已经处理完毕。</p>
-<p>如果当前一个<code>join()</code>正在阻塞，它将在队列中的所有任务都处理完时恢复执行(即每一个由<code>put()</code>调用入队的任务都有一个对应的<code>task_done()</code>调用)。</p>
-<h4 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h4><p>阻塞调用线程，直到队列中的所有任务被处理掉。</p>
-<p>只要有数据被加入队列，未完成的任务数就会增加。当消费者线程调用<code>task_done()</code>(意味着有消费者取得任务并完成任务)，未完成的任务数就会减少。当未完成的任务数降到<code>0</code>，<code>join()</code>解除阻塞。</p>
+<h2 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h2><h3 id="init-target-None-name-None-args-kwargs"><a href="#init-target-None-name-None-args-kwargs" class="headerlink" title="__init__(target=None, name=None, args=(), kwargs={})"></a><code>__init__(target=None, name=None, args=(), kwargs={})</code></h3><p><code>Process</code>对象表示在一个独立的进程中运行的活动。<code>Process</code>类具有与<code>threading.Thread</code>模块中所有方法对等的方法。需要注意的是，该模块的构造函数一定要使用关键字参数调用。</p>
+<ul>
+<li><code>target</code>：是将被<code>run()</code>方法调用的可调用对象。</li>
+<li><code>name</code>：是进程的名字。默认情况下，以<code>Process-N1:N2:...:Nk</code>的形式构造唯一的名字，其中<code>N1</code>,<code>N2</code>,…,<code>Nk</code> 是一个整数序列。</li>
+<li><code>args</code>：是调用目标的参数元组。</li>
+<li><code>kwargs</code>：是调用目标的关键字参数字典。</li>
+</ul>
+<h3 id="run"><a href="#run" class="headerlink" title="run()"></a>run()</h3><p>表示进程活动的方法。你可以在子类中覆盖这个方法。标准的<code>run()</code>方法将调用传递给该对象构造函数<code>target</code>参数的可调用对象，如果有，分别带上从<code>args</code>和<code>kwargs</code>参数取得的序列参数和关键字参数。</p>
+<h3 id="start"><a href="#start" class="headerlink" title="start()"></a>start()</h3><p>开始子进程活动。每个进程对象至多调用一次此方法。</p>
+<h3 id="join-timeout"><a href="#join-timeout" class="headerlink" title="join([timeout])"></a>join([timeout])</h3><p>阻塞调用这个方法的进程，直到<code>join()</code>所属的进程结束或超时到达为止。</p>
+<p>如果<code>timeout</code>为<code>None</code>表示没有超时。</p>
+<h3 id="name"><a href="#name" class="headerlink" title="name"></a>name</h3><p>进程的名称。<code>name</code>是用于标识进程的字符串。多个进程可以有相同的<code>name</code>。构造器会设置一个初始的<code>name</code>。</p>
+<h3 id="is-alive"><a href="#is-alive" class="headerlink" title="is_alive()"></a>is_alive()</h3><p>判断当前进程是否是激活状态。从<code>start()</code>开始到子进程终止的期间，我们认为进程是激活的。</p>
+<h3 id="daemon"><a href="#daemon" class="headerlink" title="daemon"></a>daemon</h3><p>是否为守护进程。如果进程为守护进程，那么该进程不能创建进程。</p>
+<h3 id="pid"><a href="#pid" class="headerlink" title="pid"></a>pid</h3><p>返回进程<code>PID</code>。</p>
+<h3 id="terminate"><a href="#terminate" class="headerlink" title="terminate()"></a>terminate()</h3><p>杀死进程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> multiprocessing</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    p = multiprocessing.Process(target=time.sleep, args=(<span class="number">1000</span>,))</div><div class="line">    <span class="keyword">print</span> p</div><div class="line">    <span class="keyword">print</span> p.is_alive()</div><div class="line">    p.start()</div><div class="line">    <span class="keyword">print</span> p</div><div class="line">    <span class="keyword">print</span> p.is_alive()</div><div class="line">    p.terminate()</div><div class="line">    time.sleep(<span class="number">0.1</span>)</div><div class="line">    <span class="keyword">print</span> p</div><div class="line">    <span class="keyword">print</span> p.is_alive()</div><div class="line">    <span class="keyword">print</span> p.exitcode</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -333,17 +327,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/07/Python-2-Python-多线程/" rel="next" title="[Python 2] Python 多线程">
-                <i class="fa fa-chevron-left"></i> [Python 2] Python 多线程
+              <a href="/2016/12/07/Python-2-Python-线程间通讯/" rel="next" title="[Python 2] Python 线程间通讯">
+                <i class="fa fa-chevron-left"></i> [Python 2] Python 线程间通讯
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/08/Python-2-Python-多进程/" rel="prev" title="[Python 2] Python 多进程">
-                [Python 2] Python 多进程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -461,7 +451,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#qsize"><span class="nav-number">1.</span> <span class="nav-text">qsize()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#empty"><span class="nav-number">2.</span> <span class="nav-text">empty()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#full"><span class="nav-number">3.</span> <span class="nav-text">full()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put-item-block-timeout"><span class="nav-number">4.</span> <span class="nav-text">put(item[, block[, timeout]])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put-nowait-item"><span class="nav-number">5.</span> <span class="nav-text">put_nowait(item)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-block-timeout"><span class="nav-number">6.</span> <span class="nav-text">get([block[, timeout]])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-nowait"><span class="nav-number">7.</span> <span class="nav-text">get_nowait()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#task-done"><span class="nav-number">8.</span> <span class="nav-text">task_done()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join"><span class="nav-number">9.</span> <span class="nav-text">join()</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Process"><span class="nav-number">1.</span> <span class="nav-text">Process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#init-target-None-name-None-args-kwargs"><span class="nav-number">1.1.</span> <span class="nav-text">__init__(target=None, name=None, args=(), kwargs={})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run"><span class="nav-number">1.2.</span> <span class="nav-text">run()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start"><span class="nav-number">1.3.</span> <span class="nav-text">start()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join-timeout"><span class="nav-number">1.4.</span> <span class="nav-text">join([timeout])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#name"><span class="nav-number">1.5.</span> <span class="nav-text">name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#is-alive"><span class="nav-number">1.6.</span> <span class="nav-text">is_alive()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#daemon"><span class="nav-number">1.7.</span> <span class="nav-text">daemon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pid"><span class="nav-number">1.8.</span> <span class="nav-text">pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#terminate"><span class="nav-number">1.9.</span> <span class="nav-text">terminate()</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
