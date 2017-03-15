@@ -1,0 +1,608 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Python主要分为两大派系Python 2系列和Python 3系列，虽然Python 2以及Python 3 Python社区的积极维护中，但是Python 2的功能开发已经被冻结，只会进行bug修复、安全增强以及移植等工作，以便于开发者能够顺利的从Python 2迁移到Python 3。2to3与six等工具都可以使Python 2的代码转换为Python 3的代码上，但是并不推荐使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Effective Python 01] 关于 Python 版本的选择">
+<meta property="og:url" content="http://yoursite.com/2017/03/01/Effective-Python-01-关于-Python-版本的选择/index.html">
+<meta property="og:site_name" content="DMM">
+<meta property="og:description" content="Python主要分为两大派系Python 2系列和Python 3系列，虽然Python 2以及Python 3 Python社区的积极维护中，但是Python 2的功能开发已经被冻结，只会进行bug修复、安全增强以及移植等工作，以便于开发者能够顺利的从Python 2迁移到Python 3。2to3与six等工具都可以使Python 2的代码转换为Python 3的代码上，但是并不推荐使用。">
+<meta property="og:updated_time" content="2017-03-15T12:31:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Effective Python 01] 关于 Python 版本的选择">
+<meta name="twitter:description" content="Python主要分为两大派系Python 2系列和Python 3系列，虽然Python 2以及Python 3 Python社区的积极维护中，但是Python 2的功能开发已经被冻结，只会进行bug修复、安全增强以及移植等工作，以便于开发者能够顺利的从Python 2迁移到Python 3。2to3与six等工具都可以使Python 2的代码转换为Python 3的代码上，但是并不推荐使用。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+  <title> [Effective Python 01] 关于 Python 版本的选择 | DMM </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">DMM</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-python">
+          <a href="/categories/python" rel="section">
+            
+            Python
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-elk">
+          <a href="/categories/elk" rel="section">
+            
+            ELK
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-zabbix">
+          <a href="/categories/zabbix" rel="section">
+            
+            Zabbix
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-saltstack">
+          <a href="/categories/saltstack" rel="section">
+            
+            SaltStack
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [Effective Python 01] 关于 Python 版本的选择
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-03-01T17:00:04+08:00" content="2017-03-01">
+              2017-03-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>Python</code>主要分为两大派系<code>Python 2</code>系列和<code>Python 3</code>系列，虽然<code>Python 2</code>以及<code>Python 3</code> <code>Python</code>社区的积极维护中，但是<code>Python 2</code>的功能开发已经被冻结，只会进行<code>bug</code>修复、安全增强以及移植等工作，以便于开发者能够顺利的从<code>Python 2</code>迁移到<code>Python 3</code>。<code>2to3</code>与<code>six</code>等工具都可以使<code>Python 2</code>的代码转换为<code>Python 3</code>的代码上，但是并不推荐使用。</p>
+<a id="more"></a>
+<p><code>Python 3</code>经常会添加新功能并提供改进，而这些功能与改进并不会兼容<code>Python 2</code>。并且绝大部分的开源代码块都兼容<code>Python 3</code>，所以说希望大家能够逐渐的转向<code>Python 3</code>。</p>
+<p>关于<code>Python</code>的版本选择上，应该很多人都会有疑惑，很多操作系统中都默认安装了<code>Python</code>，运行<code>Python</code>的默认命令是<code>python</code>。可以使用<code>--version</code>或者<code>-V</code>参数来确定<code>Python</code>的版本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ python --version</div><div class="line">Python 2.7.10</div></pre></td></tr></table></figure>
+<p><code>Python</code>的解释器有很多种，<code>CPython</code>、<code>Jython</code>以及<code>PyPy</code>等，我们平常所说的<code>Python</code>都是默认指的是<code>CPython</code>。</p>
+<h1 id="Python-2-和-Python-3-的简要区别"><a href="#Python-2-和-Python-3-的简要区别" class="headerlink" title="Python 2 和 Python 3 的简要区别"></a>Python 2 和 Python 3 的简要区别</h1><p>简单列举几个<code>Python 2</code>和<code>Python 3</code>的几点区别，来试试手<code>Python 3</code>的魅力。</p>
+<h2 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h2><p><code>Python 2</code>中的<code>print</code>语句被<code>Python 3</code>中的<code>print()</code>函数取代，所以说在<code>Python 3</code>中必须使用括号将要输出的内容括起来。</p>
+<p><code>Python 2</code>中的<code>print</code>语句。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'Hello,'</span>, <span class="string">'World'</span></div><div class="line"><span class="keyword">print</span> <span class="string">'Hello, World'</span></div><div class="line">print(<span class="string">'Hello, World'</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">'Hello, World'</span>, <span class="comment"># 如果想要去掉 print 函数自动加的换行符，可以使用 , 结尾</span></div></pre></td></tr></table></figure>
+<p><code>Python 3</code>中的<code>print()</code>函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Hello,'</span>, <span class="string">'World'</span>)</div><div class="line">print(<span class="string">'Hello, World'</span>)</div><div class="line">print(<span class="string">'Hello, World'</span>, end=<span class="string">""</span>) <span class="comment"># 等同于 Python 2 中 , 结尾的黑魔法</span></div></pre></td></tr></table></figure>
+<p>需要注意的是<code>Python 2</code>中，通常情况下带不带括号输出没有区别，但如果在圆括号中同时输出多个对象时，就会创建一个元祖，因为<code>Python 2</code>中<code>print</code>是一个局域，而不是函数调用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Hello'</span>, <span class="string">'World'</span>)</div><div class="line"><span class="comment"># Python 2 输出：('Hello', 'World')</span></div><div class="line"><span class="comment"># Python 3 输出：Hello World</span></div></pre></td></tr></table></figure>
+<h2 id="整数除法"><a href="#整数除法" class="headerlink" title="整数除法"></a>整数除法</h2><p><code>Python 2</code>中的整数除法会自动截断小数点后的小数点，返回一个整数，如果想要得到正确的结果有两种解决方法。</p>
+<p>第一：使除数或者被除数其中一个或者全部变成浮点数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>     <span class="comment"># 输出：3 / 2 = 1</span></div><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span> <span class="comment"># 输出：3 / 2.0 = 1.5</span></div></pre></td></tr></table></figure>
+<p>第二：使用<code>from __future__ import division</code>来使用<code>Python 3</code>的除法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</div><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>     <span class="comment"># 输出：3 / 2 = 1.5</span></div><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span> <span class="comment"># 输出：3 / 2.0 = 1.5</span></div></pre></td></tr></table></figure>
+<p>这一切在<code>Python 3</code>中都变得很美好，可以直接使用正常的除法了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/01/Python-2-Python-多进程/" rel="next" title="[Python 2] Python 多进程">
+                <i class="fa fa-chevron-left"></i> [Python 2] Python 多进程
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/9565828?v=3&u=38c74edce4a8f3f5c92fb238bb23673b369d33b1&s=400"
+               alt="DMM" />
+          <p class="site-author-name" itemprop="name">DMM</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mydevops" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-2-和-Python-3-的简要区别"><span class="nav-number">1.</span> <span class="nav-text">Python 2 和 Python 3 的简要区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#print函数"><span class="nav-number">1.1.</span> <span class="nav-text">print函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数除法"><span class="nav-number">1.2.</span> <span class="nav-text">整数除法</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DMM</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
