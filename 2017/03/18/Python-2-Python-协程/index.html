@@ -1,0 +1,616 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="协程又称微线程，是一种用户态的轻量级线程。Python中协程使用Gevent库来实现。Gevent是一个基于libev的并发库，它的实现原理是Greenlet，Greenlet是以C语言扩展模块形式接入Python的轻量级协程。Greenlet全部运行在主程序进程的内部，它们被协作式的调度，意味着不会产生线程上下文切换。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Python 2] Python 协程">
+<meta property="og:url" content="http://yoursite.com/2017/03/18/Python-2-Python-协程/index.html">
+<meta property="og:site_name" content="DMM">
+<meta property="og:description" content="协程又称微线程，是一种用户态的轻量级线程。Python中协程使用Gevent库来实现。Gevent是一个基于libev的并发库，它的实现原理是Greenlet，Greenlet是以C语言扩展模块形式接入Python的轻量级协程。Greenlet全部运行在主程序进程的内部，它们被协作式的调度，意味着不会产生线程上下文切换。">
+<meta property="og:updated_time" content="2017-03-18T07:07:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Python 2] Python 协程">
+<meta name="twitter:description" content="协程又称微线程，是一种用户态的轻量级线程。Python中协程使用Gevent库来实现。Gevent是一个基于libev的并发库，它的实现原理是Greenlet，Greenlet是以C语言扩展模块形式接入Python的轻量级协程。Greenlet全部运行在主程序进程的内部，它们被协作式的调度，意味着不会产生线程上下文切换。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+  <title> [Python 2] Python 协程 | DMM </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">DMM</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-python">
+          <a href="/categories/python" rel="section">
+            
+            Python
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-elk">
+          <a href="/categories/elk" rel="section">
+            
+            ELK
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-zabbix">
+          <a href="/categories/zabbix" rel="section">
+            
+            Zabbix
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-saltstack">
+          <a href="/categories/saltstack" rel="section">
+            
+            SaltStack
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [Python 2] Python 协程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-03-18T17:00:04+08:00" content="2017-03-18">
+              2017-03-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>协程又称微线程，是一种用户态的轻量级线程。<code>Python</code>中协程使用<code>Gevent</code>库来实现。<code>Gevent</code>是一个基于<code>libev</code>的并发库，它的实现原理是<code>Greenlet</code>，<code>Greenlet</code>是以<code>C</code>语言扩展模块形式接入<code>Python</code>的轻量级协程。<code>Greenlet</code>全部运行在主程序进程的内部，它们被协作式的调度，意味着不会产生线程上下文切换。<br><a id="more"></a></p>
+<p>与<code>multiprocessing</code>和<code>threading</code>等提供的并发库不同的是，<code>gevent</code>在任何时刻，只有一个协程在运行，对于<code>CPU</code>而言，一个进程内部不管有多少协程，这些协程在这一个线程内部协作运行。 </p>
+<h1 id="协程的优缺点"><a href="#协程的优缺点" class="headerlink" title="协程的优缺点"></a>协程的优缺点</h1><p>协程的优点：</p>
+<p>​  1.规避了线程上下文切换的消耗；</p>
+<p>​  2.充分利用线程进行类似于IO操作的阻塞时间。</p>
+<p>协程的缺点：</p>
+<p>​  1.协程本质就是串行的，所以说无法利用多核<code>CPU</code>，如果要充分利用<code>CPU</code>必须与<code>multiprocessing</code>配合。</p>
+<h1 id="创建协程"><a href="#创建协程" class="headerlink" title="创建协程"></a>创建协程</h1><p>协程的创建和<code>threading</code>以及<code>multiprocessing</code>稍有不同。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gevent</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"run method~"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    g1 = gevent.spawn(run)</div><div class="line">    g1.join()</div></pre></td></tr></table></figure>
+<p><code>spawn()</code>方法直接启动协程，而不必单独使用<code>start()</code>方法进行启动。还有另外一种直接<code>joinall</code>的方式来启动协程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gevent</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"run method~"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    gevent.joinall([</div><div class="line">        gevent.spawn(run),</div><div class="line">        gevent.spawn(run)</div><div class="line">    ])</div></pre></td></tr></table></figure>
+<h3 id="传入位置参数"><a href="#传入位置参数" class="headerlink" title="传入位置参数"></a>传入位置参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gevent</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(task_id)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"&#123;&#125; run method~"</span>.format(task_id)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    gevent.joinall([</div><div class="line">        gevent.spawn(run, <span class="number">1</span>),</div><div class="line">        gevent.spawn(run, <span class="number">2</span>)</div><div class="line">    ])</div></pre></td></tr></table></figure>
+<h3 id="传入关键字参数"><a href="#传入关键字参数" class="headerlink" title="传入关键字参数"></a>传入关键字参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gevent</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(task_id)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"&#123;&#125; run method~"</span>.format(task_id)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    gevent.joinall([</div><div class="line">        gevent.spawn(run, task_id=<span class="number">1</span>),</div><div class="line">        gevent.spawn(run, task_id=<span class="number">2</span>)</div><div class="line">    ])</div></pre></td></tr></table></figure>
+<h1 id="理解协程"><a href="#理解协程" class="headerlink" title="理解协程"></a>理解协程</h1><p>并发的核心思想在于大的任务可以分解成一系列的小任务，然后同时执行或异步执行这些小任务。两个小任务之间的切换也就是上下文切换。</p>
+<p>在<code>gevent</code>中，上下文切换是通过<code>yielding</code>来完成的，在下边的例子中我们有两个上下文，通过调用<code>gevent.sleep(0)</code>它们各自<code>yield</code>向对方。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gevent</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run1</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'start run1 method ~'</span>)</div><div class="line">    gevent.sleep(<span class="number">2</span>)</div><div class="line">    print(<span class="string">'end run1 method ~'</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run2</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'start run2 method ~'</span>)</div><div class="line">    gevent.sleep(<span class="number">1</span>)</div><div class="line">    print(<span class="string">'end run2 method ~'</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run3</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">'start run3 method ~'</span>)</div><div class="line">    gevent.sleep(<span class="number">0</span>)</div><div class="line">    print(<span class="string">'end run3 method ~'</span>)</div><div class="line"></div><div class="line">gevent.joinall([</div><div class="line">    gevent.spawn(run1),</div><div class="line">    gevent.spawn(run2),</div><div class="line">    gevent.spawn(run3)</div><div class="line">])</div></pre></td></tr></table></figure>
+<h3 id="gevent-sleep-与time-sleep-的区别"><a href="#gevent-sleep-与time-sleep-的区别" class="headerlink" title="gevent.sleep()与time.sleep()的区别"></a>gevent.sleep()与time.sleep()的区别</h3><p><code>gevent.sleep()</code>是模拟的<code>io</code>操作，会发生协程的上下文切换，<code>time.sleep()</code>仅仅是阻塞协程，并不会发生协程切换。</p>
+<h1 id="猴子补丁-Monkey-patching"><a href="#猴子补丁-Monkey-patching" class="headerlink" title="猴子补丁(Monkey patching)"></a>猴子补丁(Monkey patching)</h1><p>协程的精髓在于会充分的利用<code>io</code>操作的时间来做别的事。但对于<code>CPU</code>而言同一个线程中那么多协程又只有一个协程，所以<code>io</code>操作只能交给我们自己来控制。但不用担心，<code>gevent</code>的猴子补丁会将所有标准库中可能出现<code>io</code>的地方打上一个“此处有IO”的标记，以便于我们<code>gevent</code>进行协程切换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"><span class="keyword">from</span> gevent <span class="keyword">import</span> monkey</div><div class="line">monkey.patch_all()</div><div class="line"><span class="keyword">import</span> gevent</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_file</span><span class="params">(url, filename)</span>:</span></div><div class="line">    <span class="keyword">with</span> open(filename, <span class="string">'w+'</span>) <span class="keyword">as</span> file_object:</div><div class="line">        r = requests.get(url)</div><div class="line">        file_object.write(r.content)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    gevent.joinall([</div><div class="line">        gevent.spawn(download_file, <span class="string">"http://www.baidu.com"</span>, <span class="string">"baidu"</span>),</div><div class="line">        gevent.spawn(download_file, <span class="string">"http://www.youku.com"</span>, <span class="string">"youku"</span>),</div><div class="line">        gevent.spawn(download_file, <span class="string">"http://www.iqiyi.com"</span>, <span class="string">"iqiyi"</span>)</div><div class="line">    ])</div></pre></td></tr></table></figure>
+<h1 id="协程的队列"><a href="#协程的队列" class="headerlink" title="协程的队列"></a>协程的队列</h1><p>队列是一个排序的数据集合，它有常见的<code>put</code> / <code>get</code>操作， 但是它是以在Greenlet之间可以安全操作的方式来实现的。</p>
+<p>举例来说，如果一个Greenlet从队列中取出一项，此项就不会被 同时执行的其它Greenlet再取到了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> gevent</div><div class="line"><span class="keyword">from</span> gevent <span class="keyword">import</span> queue</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">not</span> queue.empty():</div><div class="line">        task = queue.get()</div><div class="line">        <span class="keyword">print</span> <span class="string">"&#123;&#125; GET &#123;&#125;"</span>.format(n, task)</div><div class="line">        gevent.sleep(<span class="number">0</span>)</div><div class="line"></div><div class="line">    print(<span class="string">'exit!'</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">boss</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>,<span class="number">11</span>):</div><div class="line">        queue.put_nowait(i)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    queue = queue.Queue()</div><div class="line">    gevent.joinall([</div><div class="line">        gevent.spawn(boss),</div><div class="line">        gevent.spawn(worker, <span class="string">'tom'</span>),</div><div class="line">        gevent.spawn(worker, <span class="string">'jerry'</span>),</div><div class="line">        gevent.spawn(worker, <span class="string">'adm'</span>),</div><div class="line">    ])</div></pre></td></tr></table></figure>
+<p>当然协程的队列也会支持数量的限制，<code>get</code>也会对应<code>get_nowait()</code> 的方法。</p>
+<h1 id="共享数据"><a href="#共享数据" class="headerlink" title="共享数据"></a>共享数据</h1><p>因为协程都是运行在一个线程内部的，所以说拥有和线程一样的特点，数据全部共享。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gevent</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run1</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">global</span> count</div><div class="line">    count += <span class="number">1</span></div><div class="line">    <span class="keyword">print</span> count</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run2</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">global</span> count</div><div class="line">    count += <span class="number">1</span></div><div class="line">    <span class="keyword">print</span> count</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    count = <span class="number">0</span></div><div class="line">    gevent.joinall([</div><div class="line">        gevent.spawn(run1),</div><div class="line">        gevent.spawn(run2)</div><div class="line">    ])</div><div class="line">    <span class="keyword">print</span> count</div></pre></td></tr></table></figure>
+<p>协程还有一个好处就是，类似于这种运算的情况下，不必考虑加锁问题。</p>
+<h1 id="不共享数据"><a href="#不共享数据" class="headerlink" title="不共享数据"></a>不共享数据</h1><p>协程也提供了类似于多进程中<code>local</code>模块的不共享数据功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gevent</div><div class="line"><span class="keyword">from</span> gevent.local <span class="keyword">import</span> local</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run1</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">global</span> count</div><div class="line">    count.x = <span class="number">1</span></div><div class="line">    <span class="keyword">print</span> count.x</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run2</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">global</span> count</div><div class="line">    count.x = <span class="number">2</span></div><div class="line">    <span class="keyword">print</span> count.x</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    count = local()</div><div class="line">    count.x = <span class="number">0</span></div><div class="line">    gevent.joinall([</div><div class="line">        gevent.spawn(run1),</div><div class="line">        gevent.spawn(run2)</div><div class="line">    ])</div><div class="line">    <span class="keyword">print</span> count.x</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/01/Effective-Python-01-关于-Python-版本的选择/" rel="next" title="[Effective Python 01] 关于 Python 版本的选择">
+                <i class="fa fa-chevron-left"></i> [Effective Python 01] 关于 Python 版本的选择
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/9565828?v=3&u=38c74edce4a8f3f5c92fb238bb23673b369d33b1&s=400"
+               alt="DMM" />
+          <p class="site-author-name" itemprop="name">DMM</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mydevops" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#协程的优缺点"><span class="nav-number">1.</span> <span class="nav-text">协程的优缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建协程"><span class="nav-number">2.</span> <span class="nav-text">创建协程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传入位置参数"><span class="nav-number">2.0.1.</span> <span class="nav-text">传入位置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传入关键字参数"><span class="nav-number">2.0.2.</span> <span class="nav-text">传入关键字参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#理解协程"><span class="nav-number">3.</span> <span class="nav-text">理解协程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gevent-sleep-与time-sleep-的区别"><span class="nav-number">3.0.1.</span> <span class="nav-text">gevent.sleep()与time.sleep()的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#猴子补丁-Monkey-patching"><span class="nav-number">4.</span> <span class="nav-text">猴子补丁(Monkey patching)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协程的队列"><span class="nav-number">5.</span> <span class="nav-text">协程的队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#共享数据"><span class="nav-number">6.</span> <span class="nav-text">共享数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不共享数据"><span class="nav-number">7.</span> <span class="nav-text">不共享数据</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DMM</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
