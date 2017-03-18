@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/03/01/Python-2-Python-多线程/index.html">
 <meta property="og:site_name" content="DMM">
 <meta property="og:description" content="在CPython解释器中：由于GIL的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核CPU那么建议使用multiprocessing模块。但是IO密集型任务多线程仍然是一个很好的选择。">
-<meta property="og:updated_time" content="2017-03-15T11:19:40.000Z">
+<meta property="og:updated_time" content="2017-03-18T07:17:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[Python 2] Python 多线程">
 <meta name="twitter:description" content="在CPython解释器中：由于GIL的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核CPU那么建议使用multiprocessing模块。但是IO密集型任务多线程仍然是一个很好的选择。">
@@ -308,425 +308,101 @@
       
 
       
-        <p>在CPython解释器中：由于GIL的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核CPU那么建议使用multiprocessing模块。但是IO密集型任务多线程仍然是一个很好的选择。<br><a id="more"></a><br>Python中使用threading模块实现了多线程，threading模块提供了如下的函数和对象。</p>
-<p>threading</p>
-<p>threading.Thread()</p>
-<p>用于在主线程中个创建一个线程，创建的方式有两种：</p>
-<p>第一种：重写此类的<strong>init</strong>()和run()方法。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import threading
-
-class MyThreading(threading.Thread):
-
-    def __init__(self):
-        threading.Thread.__init__(self) # 必须要调用父类的构造函数
-
-    def run(self):
-        pass
-        # do something
-
-if __name__ == &quot;__main__&quot;:
-    t = MyThreading()
-    t.start()
-</code></pre><p>第二种：直接启动</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import threading
-
-def run():
-    pass
-    # do something
-
-if __name__ == &quot;__main__&quot;&quot;
-    t = threading.Thread(target=run)
-    t.start()
-</code></pre><p>实例化Thread对象后必须通过start()方法来启动这个线程，线程启动后会自动调用run()方法。</p>
-<p>构造函数</p>
-<p><strong>init</strong>(target=None, name=None, args=(), kwargs={})</p>
+        <p>在<code>CPython</code>解释器中：由于<code>GIL</code>的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核<code>CPU</code>那么建议使用<code>multiprocessing</code>模块。但是<code>IO</code>密集型任务多线程仍然是一个很好的选择。<br><a id="more"></a></p>
+<p><code>Python</code>中使用<code>threading</code>模块实现了多线程，<code>threading</code>模块提供了如下的函数和对象。</p>
+<h2 id="threading"><a href="#threading" class="headerlink" title="threading"></a>threading</h2><h3 id="threading-Thread"><a href="#threading-Thread" class="headerlink" title="threading.Thread()"></a>threading.Thread()</h3><p>用于在主线程中个创建一个线程，创建的方式有两种：</p>
+<p>第一种：重写此类的<code>__init__()</code>和<code>run()</code>方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThreading</span><span class="params">(threading.Thread)</span>:</span></div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        threading.Thread.__init__(self) <span class="comment"># 必须要调用父类的构造函数</span></div><div class="line">        </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line">        <span class="comment"># do something</span></div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    t = MyThreading()</div><div class="line">    t.start()</div></pre></td></tr></table></figure>
+<p>第二种：直接启动</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># -*- coding: utf-8 -*-</div><div class="line"></div><div class="line">import threading</div><div class="line"></div><div class="line">def run():</div><div class="line">    pass</div><div class="line">    # do something</div><div class="line"></div><div class="line">if __name__ == "__main__""</div><div class="line">    t = threading.Thread(target=run)</div><div class="line">    t.start()</div></pre></td></tr></table></figure>
+<p>实例化<code>Thread</code>对象后必须通过<code>start()</code>方法来启动这个线程，线程启动后会自动调用<code>run()</code>方法。</p>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><p><code>__init__(target=None, name=None, args=(), kwargs={})</code></p>
 <ul>
-<li>target：函数名称，在线程启动后执行的函数。</li>
-<li>name：线程名称，默认是Thread-N格式的名字，N是一个十进制数字。</li>
-<li>args：target指定函数的位置参数列表，接收一个元组。</li>
-<li>kwargs：target指定函数的关键字参数列表，接收一个字典。</li>
+<li><code>target</code>：函数名称，在线程启动后执行的函数。</li>
+<li><code>name</code>：线程名称，默认是<code>Thread-N</code>格式的名字，<code>N</code>是一个十进制数字。</li>
+<li><code>args</code>：<code>target</code>指定函数的位置参数列表，接收一个元组。</li>
+<li><code>kwargs</code>：<code>target</code>指定函数的关键字参数列表，接收一个字典。</li>
 </ul>
-<p>start()</p>
-<p>启动线程。</p>
-<p>run()</p>
-<p>通过继承方式创建线程时必须重写此方法。一旦启动一个线程之后，就认为这个线程是激活状态，直到run()方法执行完毕或者引发一个未处理异常时此线程被终止。is_alive()方法可以查看这个线程是否处于激活状态。                       </p>
-<p>join([timeout])</p>
-<p>等待线程结束，一直阻塞到线程正常结束或者有一个未处理的异常或者超时时间到了。若timeout生效，必须使除主线程以外的其他线程为守护线程。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import time
-import threading
-
-def run(number):
-    print &quot;run method start ..&quot;
-    print &quot;Task ID: {}&quot;.format(number)
-    time.sleep(2)
-    print &quot;run method end ..&quot;
-
-if __name__ == &quot;__main__&quot;:
-    start_time = time.time()
-    thread_list = []
-    for number in range(1, 51):
-        t = threading.Thread(target=run, args=(number,))
-        t.start()
-        thread_list.append(t)
-    [ t.join() for t in thread_list ]
-    print &quot;run time: {}&quot;.format(time.time() - start_time)
-</code></pre><p>name</p>
-<p>线程名称。</p>
-<p>getName()</p>
-<p>获取线程名称。</p>
-<p>setName()</p>
-<p>设置线程名称。</p>
-<p>ident</p>
-<p>线程ID。</p>
-<p>isAlive()</p>
-<p>返回线程是否激活状态。</p>
-<p>daemon</p>
-<p>标识线程是否为守护线程：是(True)，否(False)，该方法必须在start()方法前执行。它的初始值是从创建它的线程继承的。主线程默认是daemon = False，所以由主线程创建的线程默认daemon = False。</p>
-<p>isDaemon()</p>
-<p>判断线程是否是守护线程。</p>
-<p>setDaemon()</p>
-<p>设置线程是否为守护线程。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import time
-import threading
-
-def run(number):
-    print &quot;run method start ..&quot;
-    print &quot;Task ID: {}&quot;.format(number)
-    time.sleep(2)
-    print &quot;run method end ..&quot;
-
-if __name__ == &quot;__main__&quot;:
-    start_time = time.time()
-    thread_list = []
-    for number in range(1, 51):
-        t = threading.Thread(target=run, args=(number,))
-        t.setDaemon(True)
-        t.start()
-        thread_list.append(t)
-    print &quot;run time: {}&quot;.format(time.time() - start_time)
-</code></pre><p>threading.enumerate()</p>
-<p>返回当前激活状态的Thread对象的列表，包含守护线程和主线程。</p>
-<p>threading.activeCount()</p>
-<p>返回当前激活状态的Thread对象的数量，这个数量等同于enumerate()方法返回的列表的长度。</p>
-<p>threading.Lock()</p>
-<p>互斥锁，避免多个线程同时修改同一块数据。</p>
-<p>acquire()</p>
-<p>加锁。</p>
-<p>release()</p>
-<p>解锁。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import threading
-
-def add():
-    lock.acquire()
-    global number
-    number += 1
-    lock.release()
-
-if __name__ == &quot;__main__&quot;:
-    lock = threading.Lock()
-    number = 0
-    threading_list = []
-    for _ in range(10000):
-        t = threading.Thread(target=add)
-        threading_list.append(t)
-        t.start()
-    [ t.join() for t in threading_list ]
-    print number
-</code></pre><p>threading.RLock()</p>
-<p>递归锁。</p>
-<p>acquire()</p>
-<p>加锁。</p>
-<p>release()</p>
-<p>解锁。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import threading
-
-def run2():
-    lock.acquire()
-    print &quot;run run2 method~&quot;
-    lock.release()
-
-def run1():
-    lock.acquire()
-    print &quot;run run1 method~&quot;
-    run2()
-    lock.release()
-
-if __name__ == &quot;__main__&quot;:
-    lock = threading.RLock()
-    t = threading.Thread(target=run1)
-    t.start()
-    t.join()
-</code></pre><p>threading.BoundedSemaphore([value])</p>
-<p>信号量，用于控制线程数量。</p>
-<p>acquire()</p>
-<p>加锁。</p>
-<p>release()</p>
-<p>解锁。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import time
-import threading
-
-def run(number):
-    semaphore.acquire()
-    print &quot;Task ID:{}&quot;.format(number)
-    time.sleep(1)
-    semaphore.release()
-
-if __name__ == &quot;__main__&quot;:
-    semaphore = threading.BoundedSemaphore(5)
-    threading_list = []
-    for number in range(1,21):
-        t = threading.Thread(target=run, args=(number,))
-        t.start()
-        threading_list.append(t)
-    [ t.join() for t in threading_list ]
-</code></pre><p>with</p>
-<p>Lock、RLock和BoundedSemaphore对象可以用作with语句的上下文管理器。进入该代码块时将调用acquire() 方法，退出代码块时则调用release()。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import threading
-
-def add():
-    lock.acquire()
-    global number
-    number += 1
-    lock.release()
-
-if __name__ == &quot;__main__&quot;:
-    lock = threading.Lock()
-    number = 0
-    threading_list = []
-    for _ in range(10000):
-        t = threading.Thread(target=add)
-        threading_list.append(t)
-        t.start()
-    [ t.join() for t in threading_list ]
-    print number
-</code></pre><p>等同于：</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import threading
-
-def add():
-    with lock:
-        global number
-        number += 1
-
-if __name__ == &quot;__main__&quot;:
-    lock = threading.Lock()
-    number = 0
-    threading_list = []
-    for _ in range(10000):
-        t = threading.Thread(target=add)
-        threading_list.append(t)
-        t.start()
-    [ t.join() for t in threading_list ]
-    print number
-</code></pre><p>threading.Event()</p>
-<p>事件对象是线程间最简单的通信机制之一。每个事件对象管理一个内部标志，可以在事件对象上调用set()方法将内部标志设为true，调用clear()方法将内部标志重置为false。在事件对象调用wait()方法时，线程将阻塞直到事件对象的内部标志被设为true。</p>
-<p>set()</p>
-<p>设置标记为 True。</p>
-<p>clear()</p>
-<p>设置标记为 False。</p>
-<p>wait()</p>
-<p>在事件对象调用wait()方法时，线程将阻塞直到内部标志被设置为True。</p>
-<p>isSet()</p>
-<p>判断标记是否被设置。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import time
-import threading
-
-def light():
-    &quot;&quot;&quot;
-    3s 红灯
-    2s 绿灯
-    1s 黄灯
-    &quot;&quot;&quot;
-    global event
-    i = 0
-    while True:
-        if i &lt; 3:
-            print &quot;\033[41;1m红灯\033[0m&quot;
-            event.clear()
-        elif i &lt; 5:
-            print &quot;\033[42;1m绿灯\033[0m&quot;
-            event.set()
-        elif i &lt; 6:
-            print &quot;\033[43;1m黄灯\033[0m&quot;
-            event.set()
-            i = -1
-        i += 1
-        time.sleep(1)
-
-def car(number):
-    global event
-    while True:
-        if event.isSet():
-            print &quot;汽车[{}]奔跑。。&quot;.format(number)
-        else:
-            print &quot;汽车[{}]等待。。&quot;.format(number)
-        time.sleep(1)
-
-if __name__ == &quot;__main__&quot;:
-    event = threading.Event()
-    l = threading.Thread(target=light)
-    l.start()
-    for i in range(1,6):
-        c = threading.Thread(target=car, args=(i,))
-        c.start()
-</code></pre><p>threading.local()</p>
-<p>为多个线程提供不同享空间。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import threading
-
-def run(number):
-    global local
-    print &quot;BEGIN local: {}&quot;.format(local.__dict__)
-    local.name = number
-    print &quot;END local: {}&quot;.format(local.__dict__)
-
-if __name__ == &quot;__main__&quot;:
-    local = threading.local()
-    print local.__dict__
-    local.name = &quot;MAIN&quot;
-    print local.__dict__
-    for number in range(1, 3):
-        t = threading.Thread(target=run, args=(number,))
-        t.start()
-</code></pre><p>threading.Timer()</p>
-<p>定时器，一个线程，它在一个指定的时间间隔之后执行一个函数。</p>
-<p>构造函数</p>
-<p><strong>init</strong>(interval, function, args=[], kwargs={}</p>
+<h4 id="start"><a href="#start" class="headerlink" title="start()"></a>start()</h4><p>启动线程。</p>
+<h4 id="run"><a href="#run" class="headerlink" title="run()"></a>run()</h4><p>通过继承方式创建线程时必须重写此方法。一旦启动一个线程之后，就认为这个线程是激活状态，直到<code>run()</code>方法执行完毕或者引发一个未处理异常时此线程被终止。<code>is_alive()</code>方法可以查看这个线程是否处于激活状态。                       </p>
+<h4 id="join-timeout"><a href="#join-timeout" class="headerlink" title="join([timeout])"></a>join([timeout])</h4><p>等待线程结束，一直阻塞到线程正常结束或者有一个未处理的异常或者超时时间到了。若<code>timeout</code>生效，必须使除主线程以外的其他线程为守护线程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"run method start .."</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"Task ID: &#123;&#125;"</span>.format(number)</div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> <span class="string">"run method end .."</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    start_time = time.time()</div><div class="line">    thread_list = []</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">51</span>):</div><div class="line">        t = threading.Thread(target=run, args=(number,))</div><div class="line">        t.start()</div><div class="line">        thread_list.append(t)</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> thread_list ]</div><div class="line">    <span class="keyword">print</span> <span class="string">"run time: &#123;&#125;"</span>.format(time.time() - start_time)</div></pre></td></tr></table></figure>
+<h4 id="name"><a href="#name" class="headerlink" title="name"></a>name</h4><p>线程名称。</p>
+<h4 id="getName"><a href="#getName" class="headerlink" title="getName()"></a>getName()</h4><p>获取线程名称。</p>
+<h4 id="setName"><a href="#setName" class="headerlink" title="setName()"></a>setName()</h4><p>设置线程名称。</p>
+<h4 id="ident"><a href="#ident" class="headerlink" title="ident"></a>ident</h4><p>线程<code>ID</code>。</p>
+<h4 id="isAlive"><a href="#isAlive" class="headerlink" title="isAlive()"></a>isAlive()</h4><p>返回线程是否激活状态。</p>
+<h4 id="daemon"><a href="#daemon" class="headerlink" title="daemon"></a>daemon</h4><p>标识线程是否为守护线程：是(<code>True</code>)，否(<code>False</code>)，该方法必须在<code>start()</code>方法前执行。它的初始值是从创建它的线程继承的。主线程默认是<code>daemon = False</code>，所以由主线程创建的线程默认<code>daemon = False</code>。</p>
+<h4 id="isDaemon"><a href="#isDaemon" class="headerlink" title="isDaemon()"></a>isDaemon()</h4><p>判断线程是否是守护线程。</p>
+<h4 id="setDaemon"><a href="#setDaemon" class="headerlink" title="setDaemon()"></a>setDaemon()</h4><p>设置线程是否为守护线程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"run method start .."</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"Task ID: &#123;&#125;"</span>.format(number)</div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    <span class="keyword">print</span> <span class="string">"run method end .."</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    start_time = time.time()</div><div class="line">    thread_list = []</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">51</span>):</div><div class="line">        t = threading.Thread(target=run, args=(number,))</div><div class="line">        t.setDaemon(<span class="keyword">True</span>)</div><div class="line">        t.start()</div><div class="line">        thread_list.append(t)</div><div class="line">    <span class="keyword">print</span> <span class="string">"run time: &#123;&#125;"</span>.format(time.time() - start_time)</div></pre></td></tr></table></figure>
+<h3 id="threading-enumerate"><a href="#threading-enumerate" class="headerlink" title="threading.enumerate()"></a>threading.enumerate()</h3><p>返回当前激活状态的<code>Thread</code>对象的列表，包含守护线程和主线程。</p>
+<h3 id="threading-activeCount"><a href="#threading-activeCount" class="headerlink" title="threading.activeCount()"></a>threading.activeCount()</h3><p>返回当前激活状态的<code>Thread</code>对象的数量，这个数量等同于<code>enumerate()</code>方法返回的列表的长度。</p>
+<h3 id="threading-Lock"><a href="#threading-Lock" class="headerlink" title="threading.Lock()"></a>threading.Lock()</h3><p>互斥锁，避免多个线程同时修改同一块数据。</p>
+<h4 id="acquire"><a href="#acquire" class="headerlink" title="acquire()"></a>acquire()</h4><p>加锁。</p>
+<h4 id="release"><a href="#release" class="headerlink" title="release()"></a>release()</h4><p>解锁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line">    </div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">()</span>:</span></div><div class="line">    lock.acquire()</div><div class="line">    <span class="keyword">global</span> number</div><div class="line">    number += <span class="number">1</span></div><div class="line">    lock.release()</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    lock = threading.Lock()</div><div class="line">    number = <span class="number">0</span></div><div class="line">    threading_list = []</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10000</span>):</div><div class="line">        t = threading.Thread(target=add)</div><div class="line">        threading_list.append(t)</div><div class="line">        t.start()</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> threading_list ]</div><div class="line">    <span class="keyword">print</span> number</div></pre></td></tr></table></figure>
+<h3 id="threading-RLock"><a href="#threading-RLock" class="headerlink" title="threading.RLock()"></a>threading.RLock()</h3><p>递归锁。</p>
+<h4 id="acquire-1"><a href="#acquire-1" class="headerlink" title="acquire()"></a>acquire()</h4><p>加锁。</p>
+<h4 id="release-1"><a href="#release-1" class="headerlink" title="release()"></a>release()</h4><p>解锁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line">    </div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run2</span><span class="params">()</span>:</span></div><div class="line">    lock.acquire()</div><div class="line">    <span class="keyword">print</span> <span class="string">"run run2 method~"</span></div><div class="line">    lock.release()</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run1</span><span class="params">()</span>:</span></div><div class="line">    lock.acquire()</div><div class="line">    <span class="keyword">print</span> <span class="string">"run run1 method~"</span></div><div class="line">    run2()</div><div class="line">    lock.release()</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    lock = threading.RLock()</div><div class="line">    t = threading.Thread(target=run1)</div><div class="line">    t.start()</div><div class="line">    t.join()</div></pre></td></tr></table></figure>
+<h3 id="threading-BoundedSemaphore-value"><a href="#threading-BoundedSemaphore-value" class="headerlink" title="threading.BoundedSemaphore([value])"></a>threading.BoundedSemaphore([value])</h3><p>信号量，用于控制线程数量。</p>
+<h4 id="acquire-2"><a href="#acquire-2" class="headerlink" title="acquire()"></a>acquire()</h4><p>加锁。</p>
+<h4 id="release-2"><a href="#release-2" class="headerlink" title="release()"></a>release()</h4><p>解锁。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(number)</span>:</span></div><div class="line">    semaphore.acquire()</div><div class="line">    <span class="keyword">print</span> <span class="string">"Task ID:&#123;&#125;"</span>.format(number)</div><div class="line">    time.sleep(<span class="number">1</span>)</div><div class="line">    semaphore.release()</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    semaphore = threading.BoundedSemaphore(<span class="number">5</span>)</div><div class="line">    threading_list = []</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">21</span>):</div><div class="line">        t = threading.Thread(target=run, args=(number,))</div><div class="line">        t.start()</div><div class="line">        threading_list.append(t)</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> threading_list ]</div></pre></td></tr></table></figure>
+<h3 id="with"><a href="#with" class="headerlink" title="with"></a>with</h3><p><code>Lock</code>、<code>RLock</code>和<code>BoundedSemaphore</code>对象可以用作<code>with</code>语句的上下文管理器。进入该代码块时将调用<code>acquire()</code> 方法，退出代码块时则调用<code>release()</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line">    </div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">()</span>:</span></div><div class="line">    lock.acquire()</div><div class="line">    <span class="keyword">global</span> number</div><div class="line">    number += <span class="number">1</span></div><div class="line">    lock.release()</div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    lock = threading.Lock()</div><div class="line">    number = <span class="number">0</span></div><div class="line">    threading_list = []</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10000</span>):</div><div class="line">        t = threading.Thread(target=add)</div><div class="line">        threading_list.append(t)</div><div class="line">        t.start()</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> threading_list ]</div><div class="line">    <span class="keyword">print</span> number</div></pre></td></tr></table></figure>
+<p>等同于：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line">    </div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">with</span> lock:</div><div class="line">        <span class="keyword">global</span> number</div><div class="line">        number += <span class="number">1</span></div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    lock = threading.Lock()</div><div class="line">    number = <span class="number">0</span></div><div class="line">    threading_list = []</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10000</span>):</div><div class="line">        t = threading.Thread(target=add)</div><div class="line">        threading_list.append(t)</div><div class="line">        t.start()</div><div class="line">    [ t.join() <span class="keyword">for</span> t <span class="keyword">in</span> threading_list ]</div><div class="line">    <span class="keyword">print</span> number</div></pre></td></tr></table></figure>
+<h3 id="threading-Event"><a href="#threading-Event" class="headerlink" title="threading.Event()"></a>threading.Event()</h3><p>事件对象是线程间最简单的通信机制之一。每个事件对象管理一个内部标志，可以在事件对象上调用<code>set()</code>方法将内部标志设为<code>true</code>，调用<code>clear()</code>方法将内部标志重置为<code>false</code>。在事件对象调用<code>wait()</code>方法时，线程将阻塞直到事件对象的内部标志被设为<code>true</code>。</p>
+<h4 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h4><p>设置标记为 True。</p>
+<h4 id="clear"><a href="#clear" class="headerlink" title="clear()"></a>clear()</h4><p>设置标记为 False。</p>
+<h4 id="wait"><a href="#wait" class="headerlink" title="wait()"></a>wait()</h4><p>在事件对象调用<code>wait()</code>方法时，线程将阻塞直到内部标志被设置为<code>True</code>。</p>
+<h4 id="isSet"><a href="#isSet" class="headerlink" title="isSet()"></a>isSet()</h4><p>判断标记是否被设置。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">light</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    3s 红灯</div><div class="line">    2s 绿灯</div><div class="line">    1s 黄灯</div><div class="line">    """</div><div class="line">    <span class="keyword">global</span> event</div><div class="line">    i = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">if</span> i &lt; <span class="number">3</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"\033[41;1m红灯\033[0m"</span></div><div class="line">            event.clear()</div><div class="line">        <span class="keyword">elif</span> i &lt; <span class="number">5</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"\033[42;1m绿灯\033[0m"</span></div><div class="line">            event.set()</div><div class="line">        <span class="keyword">elif</span> i &lt; <span class="number">6</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"\033[43;1m黄灯\033[0m"</span></div><div class="line">            event.set()</div><div class="line">            i = <span class="number">-1</span></div><div class="line">        i += <span class="number">1</span></div><div class="line">        time.sleep(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">car</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">global</span> event</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">if</span> event.isSet():</div><div class="line">            <span class="keyword">print</span> <span class="string">"汽车[&#123;&#125;]奔跑。。"</span>.format(number)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"汽车[&#123;&#125;]等待。。"</span>.format(number)</div><div class="line">        time.sleep(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    event = threading.Event()</div><div class="line">    l = threading.Thread(target=light)</div><div class="line">    l.start()</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">6</span>):</div><div class="line">        c = threading.Thread(target=car, args=(i,))</div><div class="line">        c.start()</div></pre></td></tr></table></figure>
+<h3 id="threading-local"><a href="#threading-local" class="headerlink" title="threading.local()"></a>threading.local()</h3><p>为多个线程提供不同享空间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">global</span> local</div><div class="line">    <span class="keyword">print</span> <span class="string">"BEGIN local: &#123;&#125;"</span>.format(local.__dict__)</div><div class="line">    local.name = number</div><div class="line">    <span class="keyword">print</span> <span class="string">"END local: &#123;&#125;"</span>.format(local.__dict__)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    local = threading.local()</div><div class="line">    <span class="keyword">print</span> local.__dict__</div><div class="line">    local.name = <span class="string">"MAIN"</span></div><div class="line">    <span class="keyword">print</span> local.__dict__</div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">3</span>):</div><div class="line">        t = threading.Thread(target=run, args=(number,))</div><div class="line">        t.start()</div></pre></td></tr></table></figure>
+<h3 id="threading-Timer"><a href="#threading-Timer" class="headerlink" title="threading.Timer()"></a>threading.Timer()</h3><p>定时器，一个线程，它在一个指定的时间间隔之后执行一个函数。</p>
+<h4 id="构造函数-1"><a href="#构造函数-1" class="headerlink" title="构造函数"></a>构造函数</h4><p><code>__init__(interval, function, args=[], kwargs={}</code></p>
 <ul>
-<li>interval：秒之后执行函数</li>
-<li>function：执行的函数名称</li>
-<li>args：位置参数</li>
-<li>kwargs：关键字参数</li>
+<li><code>interval</code>：秒之后执行函数</li>
+<li><code>function</code>：执行的函数名称</li>
+<li><code>args</code>：位置参数</li>
+<li><code>kwargs</code>：关键字参数</li>
 </ul>
-<p>cancel()</p>
-<p>取消定时器。</p>
-<pre><code># -*- coding: utf-8 -*-
-
-import threading
-
-def run():
-    print &quot;hello world~&quot;
-
-if __name__ == &quot;__main__&quot;:
-    timer = threading.Timer(2, run)
-    timer.start()
-</code></pre><p>线程间通信</p>
-<p>queue模块实现了多生产者、多消费者队列。共实现了三类队列，主要差别在于取得数据的顺序上。</p>
+<h4 id="cancel"><a href="#cancel" class="headerlink" title="cancel()"></a>cancel()</h4><p>取消定时器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> threading</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">"hello world~"</span></div><div class="line">    </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    timer = threading.Timer(<span class="number">2</span>, run)</div><div class="line">    timer.start()</div></pre></td></tr></table></figure>
+<h1 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h1><p><code>queue</code>模块实现了多生产者、多消费者队列。共实现了三类队列，主要差别在于取得数据的顺序上。</p>
 <ol>
-<li>Queue(maxsize=0)：在FIFO(First In First Out，先进先出)队列中，最早加入的任务会被最先得到。</li>
-<li>LifoQueue(maxsize=0)：在LIFO(Last In First Out，后进先出)队列中，最后加入的任务会被最先得到(就像栈一样)。</li>
-<li>PriorityQueue(maxsize=0)：在优先队列中，任务被保持有序，拥有最小值的任务（优先级最高）被最先得到。</li>
+<li><code>Queue(maxsize=0)</code>：在<code>FIFO</code>(<code>First In First Out</code>，先进先出)队列中，最早加入的任务会被最先得到。</li>
+<li><code>LifoQueue(maxsize=0)</code>：在<code>LIFO</code>(<code>Last In First Out</code>，后进先出)队列中，最后加入的任务会被最先得到(就像栈一样)。</li>
+<li><code>PriorityQueue(maxsize=0)</code>：在优先队列中，任务被保持有序，拥有最小值的任务（优先级最高）被最先得到。</li>
 </ol>
-<p>maxsize是个整数，指明了队列中能存放的数据个数的上限。一旦达到上限，插入会导致阻塞，直到队列中的数据被消费掉。如果maxsize小于或者等于0，队列大小没有限制。</p>
-<p>Queue对象常用方法(Queue、LifoQueue、PriorityQueue公用方法)：</p>
-<p>qsize()</p>
-<p>队列的大小。</p>
-<p>empty()</p>
-<p>如果队列为空返回True，否则返回False。</p>
-<p>full()</p>
-<p>如果队列是满的返回True，否则返回False。</p>
-<p>put(item[, block[, timeout]])</p>
-<p>将item放入队列中。</p>
-<p>如果block为True且timeout为空对象那么阻塞调用，无超时。阻塞调用线程，直到有空闲槽可用。</p>
-<p>如果block为False，如果有空闲槽可用将数据放入队列，否则立即抛出Full异常(非阻塞调用，timeout被忽略)。</p>
-<p>如果timeout是个正整数，阻塞调用进程最多timeout秒，如果一直无空闲槽可用，抛出Full异常(带超时的阻塞调用)。</p>
-<p>put_nowait(item)</p>
-<p>等同于put(item, False)(非阻塞调用)。</p>
-<p>get([block[, timeout]])</p>
-<p>从队列中移除并返回一个数据。</p>
-<p>如果block为True且timeout为空对象阻塞调用，无超时，阻塞调用进程直到有数据可用。</p>
-<p>如果block为False，如果有数据可用返回数据，否则立即抛出Empty异常(非阻塞调用，timeout被忽略)。        如果timeout是个正整数，阻塞调用进程最多timeout秒，如果一直无数据可用，抛出Empty异常（带超时的阻塞调用）。</p>
-<p>get_nowait()</p>
-<p>等同于get(False)(非阻塞调用)。</p>
-<p>task_done()</p>
-<p>意味着之前入队的一个任务已经完成。由队列的消费者线程调用。每一个get()调用得到一个任务, 接下来的 task_done()调用告诉队列该任务已经处理完毕。</p>
-<p>如果当前一个join()正在阻塞，它将在队列中的所有任务都处理完时恢复执行(即每一个由put()调用入队的任务都有一个对应的task_done()调用)。</p>
-<p>join()</p>
-<p>阻塞调用线程，直到队列中的所有任务被处理掉。</p>
-<p>只要有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()(意味着有消费者取得任务并完成任务)，未完成的任务数就会减少。当未完成的任务数降到0，join()解除阻塞。</p>
-<p>线程池</p>
-<p>虽然线程的开销相对于相对进程而言是微小的，但是如果频繁的创建和销毁线程的这部分损耗可以被避免掉，对于性能的提升是很有必要的。</p>
-<p>实现线程池</p>
-<p>线程池简单来说就是线程+队列。</p>
-<pre><code># -*- coding: UTF-8 -*-
-
-import time
-import Queue
-import threading
-
-class Worker(threading.Thread):
-
-    def __init__(self, queue):
-        super(Worker, self).__init__()
-        self.__queue = queue
-        self.setDaemon(True)
-        self.start()
-
-    def run(self):
-        while True:
-            function, args, kwargs = self.__queue.get()
-            function(*args, **kwargs)
-            print &quot;Thread Name: {}&quot;.format(self.name)
-            self.__queue.task_done()
-
-class ThreadPool(object):
-
-    def __init__(self, num_workers):
-        self.__queue = Queue.Queue(num_workers)
-        [ Worker(self.__queue) for _ in range(num_workers) ]
-
-    def spawn(self, f, *args, **kwargs):
-        self.__queue.put((f, args, kwargs))
-
-    def wait(self):
-        self.__queue.join()
-
-def test_function(number):
-    time.sleep(1)
-    return number
-
-if __name__ == &quot;__main__&quot;:
-    pool = ThreadPool(5)985 211
-    for number in range(12):
-        pool.spawn(test_function, number)
-
-    pool.wait()
-</code></pre><p>输出结果：</p>
-<pre><code>Thread Name: Thread-1
-Thread Name: Thread-2
-Thread Name: Thread-3
-Thread Name: Thread-4
-Thread Name: Thread-5
-Thread Name: Thread-1
-Thread Name: Thread-2
-Thread Name: Thread-3
-Thread Name: Thread-4
-Thread Name: Thread-5
-Thread Name: Thread-1
-Thread Name: Thread-2
-</code></pre><p>可以看到程序是根据我们设定的num_workers的数量来决定并发数量的，并且可以发现线程并没有重复创建而是共用的。</p>
-<p>Python 的线程池</p>
-<p>Python中有个需要安装的threadpool线程池模块，但是已经不推荐使用，官方建议使用标准库中的multiprocessing模块或者asyncio模块来替代。asyncio是Python3新增的模块，这里暂不做讨论。</p>
+<p><code>maxsize</code>是个整数，指明了队列中能存放的数据个数的上限。一旦达到上限，插入会导致阻塞，直到队列中的数据被消费掉。如果<code>maxsize</code>小于或者等于<code>0</code>，队列大小没有限制。</p>
+<p><code>Queue</code>对象常用方法(<code>Queue</code>、<code>LifoQueue</code>、<code>PriorityQueue</code>公用方法)：</p>
+<h4 id="qsize"><a href="#qsize" class="headerlink" title="qsize()"></a>qsize()</h4><p>队列的大小。</p>
+<h4 id="empty"><a href="#empty" class="headerlink" title="empty()"></a>empty()</h4><p>如果队列为空返回<code>True</code>，否则返回<code>False</code>。</p>
+<h4 id="full"><a href="#full" class="headerlink" title="full()"></a>full()</h4><p>如果队列是满的返回<code>True</code>，否则返回<code>False</code>。</p>
+<h4 id="put-item-block-timeout"><a href="#put-item-block-timeout" class="headerlink" title="put(item[, block[, timeout]])"></a>put(item[, block[, timeout]])</h4><p>将<code>item</code>放入队列中。</p>
+<p>如果<code>block</code>为<code>True</code>且<code>timeout</code>为空对象那么阻塞调用，无超时。阻塞调用线程，直到有空闲槽可用。</p>
+<p>如果<code>block</code>为<code>False</code>，如果有空闲槽可用将数据放入队列，否则立即抛出<code>Full</code>异常(非阻塞调用，<code>timeout</code>被忽略)。</p>
+<p>如果<code>timeout</code>是个正整数，阻塞调用进程最多<code>timeout</code>秒，如果一直无空闲槽可用，抛出<code>Full</code>异常(带超时的阻塞调用)。</p>
+<h4 id="put-nowait-item"><a href="#put-nowait-item" class="headerlink" title="put_nowait(item)"></a>put_nowait(item)</h4><p>等同于<code>put(item, False)</code>(非阻塞调用)。</p>
+<h4 id="get-block-timeout"><a href="#get-block-timeout" class="headerlink" title="get([block[, timeout]])"></a>get([block[, timeout]])</h4><p>从队列中移除并返回一个数据。</p>
+<p>如果<code>block</code>为<code>True</code>且<code>timeout</code>为空对象阻塞调用，无超时，阻塞调用进程直到有数据可用。</p>
+<p>如果<code>block</code>为<code>False</code>，如果有数据可用返回数据，否则立即抛出<code>Empty</code>异常(非阻塞调用，<code>timeout</code>被忽略)。        如果<code>timeout</code>是个正整数，阻塞调用进程最多<code>timeout</code>秒，如果一直无数据可用，抛出<code>Empty</code>异常（带超时的阻塞调用）。</p>
+<h4 id="get-nowait"><a href="#get-nowait" class="headerlink" title="get_nowait()"></a>get_nowait()</h4><p>等同于<code>get(False)</code>(非阻塞调用)。</p>
+<h4 id="task-done"><a href="#task-done" class="headerlink" title="task_done()"></a>task_done()</h4><p>意味着之前入队的一个任务已经完成。由队列的消费者线程调用。每一个<code>get()</code>调用得到一个任务, 接下来的 <code>task_done()</code>调用告诉队列该任务已经处理完毕。</p>
+<p>如果当前一个<code>join()</code>正在阻塞，它将在队列中的所有任务都处理完时恢复执行(即每一个由<code>put()</code>调用入队的任务都有一个对应的<code>task_done()</code>调用)。</p>
+<h4 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h4><p>阻塞调用线程，直到队列中的所有任务被处理掉。</p>
+<p>只要有数据被加入队列，未完成的任务数就会增加。当消费者线程调用<code>task_done()</code>(意味着有消费者取得任务并完成任务)，未完成的任务数就会减少。当未完成的任务数降到<code>0</code>，<code>join()</code>解除阻塞。</p>
+<h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1><p>虽然线程的开销相对于相对进程而言是微小的，但是如果频繁的创建和销毁线程的这部分损耗可以被避免掉，对于性能的提升是很有必要的。</p>
+<h2 id="实现线程池"><a href="#实现线程池" class="headerlink" title="实现线程池"></a>实现线程池</h2><p>线程池简单来说就是线程<code>+</code>队列。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> Queue</div><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Worker</span><span class="params">(threading.Thread)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, queue)</span>:</span></div><div class="line">        super(Worker, self).__init__()</div><div class="line">        self.__queue = queue</div><div class="line">        self.setDaemon(<span class="keyword">True</span>)</div><div class="line">        self.start()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">            function, args, kwargs = self.__queue.get()</div><div class="line">            function(*args, **kwargs)</div><div class="line">            <span class="keyword">print</span> <span class="string">"Thread Name: &#123;&#125;"</span>.format(self.name)</div><div class="line">            self.__queue.task_done()</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, num_workers)</span>:</span></div><div class="line">        self.__queue = Queue.Queue(num_workers)</div><div class="line">        [ Worker(self.__queue) <span class="keyword">for</span> _ <span class="keyword">in</span> range(num_workers) ]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">spawn</span><span class="params">(self, f, *args, **kwargs)</span>:</span></div><div class="line">        self.__queue.put((f, args, kwargs))</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wait</span><span class="params">(self)</span>:</span></div><div class="line">        self.__queue.join()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_function</span><span class="params">(number)</span>:</span></div><div class="line">    time.sleep(<span class="number">1</span>)</div><div class="line">    <span class="keyword">return</span> number</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    pool = ThreadPool(<span class="number">5</span>)<span class="number">985</span> <span class="number">211</span></div><div class="line">    <span class="keyword">for</span> number <span class="keyword">in</span> range(<span class="number">12</span>):</div><div class="line">        pool.spawn(test_function, number)</div><div class="line">    </div><div class="line">    pool.wait()</div></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Thread Name: Thread-1</div><div class="line">Thread Name: Thread-2</div><div class="line">Thread Name: Thread-3</div><div class="line">Thread Name: Thread-4</div><div class="line">Thread Name: Thread-5</div><div class="line">Thread Name: Thread-1</div><div class="line">Thread Name: Thread-2</div><div class="line">Thread Name: Thread-3</div><div class="line">Thread Name: Thread-4</div><div class="line">Thread Name: Thread-5</div><div class="line">Thread Name: Thread-1</div><div class="line">Thread Name: Thread-2</div></pre></td></tr></table></figure>
+<p>可以看到程序是根据我们设定的<code>num_workers</code>的数量来决定并发数量的，并且可以发现线程并没有重复创建而是共用的。</p>
+<h2 id="Python-的线程池"><a href="#Python-的线程池" class="headerlink" title="Python 的线程池"></a>Python 的线程池</h2><p><code>Python</code>中有个需要安装的<code>threadpool</code>线程池模块，但是已经不推荐使用，官方建议使用标准库中的<code>multiprocessing</code>模块或者<code>asyncio</code>模块来替代。<code>asyncio</code>是<code>Python3</code>新增的模块，这里暂不做讨论。</p>
 
       
     </div>
@@ -879,7 +555,7 @@ Thread Name: Thread-2
               
             
             
-              <p class="post-toc-empty">This post does not have a Table of Contents</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#threading"><span class="nav-number">1.</span> <span class="nav-text">threading</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-Thread"><span class="nav-number">1.1.</span> <span class="nav-text">threading.Thread()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造函数"><span class="nav-number">1.1.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#start"><span class="nav-number">1.1.2.</span> <span class="nav-text">start()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#run"><span class="nav-number">1.1.3.</span> <span class="nav-text">run()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join-timeout"><span class="nav-number">1.1.4.</span> <span class="nav-text">join([timeout])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#name"><span class="nav-number">1.1.5.</span> <span class="nav-text">name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getName"><span class="nav-number">1.1.6.</span> <span class="nav-text">getName()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setName"><span class="nav-number">1.1.7.</span> <span class="nav-text">setName()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ident"><span class="nav-number">1.1.8.</span> <span class="nav-text">ident</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isAlive"><span class="nav-number">1.1.9.</span> <span class="nav-text">isAlive()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#daemon"><span class="nav-number">1.1.10.</span> <span class="nav-text">daemon</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isDaemon"><span class="nav-number">1.1.11.</span> <span class="nav-text">isDaemon()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setDaemon"><span class="nav-number">1.1.12.</span> <span class="nav-text">setDaemon()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-enumerate"><span class="nav-number">1.2.</span> <span class="nav-text">threading.enumerate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-activeCount"><span class="nav-number">1.3.</span> <span class="nav-text">threading.activeCount()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-Lock"><span class="nav-number">1.4.</span> <span class="nav-text">threading.Lock()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#acquire"><span class="nav-number">1.4.1.</span> <span class="nav-text">acquire()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#release"><span class="nav-number">1.4.2.</span> <span class="nav-text">release()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-RLock"><span class="nav-number">1.5.</span> <span class="nav-text">threading.RLock()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#acquire-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">acquire()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#release-1"><span class="nav-number">1.5.2.</span> <span class="nav-text">release()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-BoundedSemaphore-value"><span class="nav-number">1.6.</span> <span class="nav-text">threading.BoundedSemaphore([value])</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#acquire-2"><span class="nav-number">1.6.1.</span> <span class="nav-text">acquire()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#release-2"><span class="nav-number">1.6.2.</span> <span class="nav-text">release()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#with"><span class="nav-number">1.7.</span> <span class="nav-text">with</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-Event"><span class="nav-number">1.8.</span> <span class="nav-text">threading.Event()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#set"><span class="nav-number">1.8.1.</span> <span class="nav-text">set()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clear"><span class="nav-number">1.8.2.</span> <span class="nav-text">clear()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wait"><span class="nav-number">1.8.3.</span> <span class="nav-text">wait()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isSet"><span class="nav-number">1.8.4.</span> <span class="nav-text">isSet()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-local"><span class="nav-number">1.9.</span> <span class="nav-text">threading.local()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#threading-Timer"><span class="nav-number">1.10.</span> <span class="nav-text">threading.Timer()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造函数-1"><span class="nav-number">1.10.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cancel"><span class="nav-number">1.10.2.</span> <span class="nav-text">cancel()</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程间通信"><span class="nav-number"></span> <span class="nav-text">线程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#qsize"><span class="nav-number">0.0.1.</span> <span class="nav-text">qsize()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#empty"><span class="nav-number">0.0.2.</span> <span class="nav-text">empty()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#full"><span class="nav-number">0.0.3.</span> <span class="nav-text">full()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put-item-block-timeout"><span class="nav-number">0.0.4.</span> <span class="nav-text">put(item[, block[, timeout]])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put-nowait-item"><span class="nav-number">0.0.5.</span> <span class="nav-text">put_nowait(item)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-block-timeout"><span class="nav-number">0.0.6.</span> <span class="nav-text">get([block[, timeout]])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-nowait"><span class="nav-number">0.0.7.</span> <span class="nav-text">get_nowait()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#task-done"><span class="nav-number">0.0.8.</span> <span class="nav-text">task_done()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join"><span class="nav-number">0.0.9.</span> <span class="nav-text">join()</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程池"><span class="nav-number"></span> <span class="nav-text">线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现线程池"><span class="nav-number">1.</span> <span class="nav-text">实现线程池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-的线程池"><span class="nav-number">2.</span> <span class="nav-text">Python 的线程池</span></a></li></ol></div>
             
           </div>
         </section>
