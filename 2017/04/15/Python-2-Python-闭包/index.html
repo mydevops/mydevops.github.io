@@ -1,0 +1,609 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="装饰器本质上来讲就是闭包的一种应用，使用更加优雅的方式来编写Python代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Python 2] Python 闭包">
+<meta property="og:url" content="http://yoursite.com/2017/04/15/Python-2-Python-闭包/index.html">
+<meta property="og:site_name" content="DMM">
+<meta property="og:description" content="装饰器本质上来讲就是闭包的一种应用，使用更加优雅的方式来编写Python代码。">
+<meta property="og:updated_time" content="2017-04-15T08:22:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Python 2] Python 闭包">
+<meta name="twitter:description" content="装饰器本质上来讲就是闭包的一种应用，使用更加优雅的方式来编写Python代码。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+  <title> [Python 2] Python 闭包 | DMM </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">DMM</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-python">
+          <a href="/categories/python" rel="section">
+            
+            Python
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-elk">
+          <a href="/categories/elk" rel="section">
+            
+            ELK
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-zabbix">
+          <a href="/categories/zabbix" rel="section">
+            
+            Zabbix
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-saltstack">
+          <a href="/categories/saltstack" rel="section">
+            
+            SaltStack
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [Python 2] Python 闭包
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-04-15T16:00:04+08:00" content="2017-04-15">
+              2017-04-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>装饰器本质上来讲就是闭包的一种应用，使用更加优雅的方式来编写<code>Python</code>代码。</p>
+<a id="more"></a>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p><code>Python</code>允许创建嵌套函数，函数中的函数作用域依然遵循<code>LEGB</code>原则。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">()</span>:</span></div><div class="line">    x = <span class="number">1</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">print</span> x</div><div class="line">    inner()</div><div class="line"></div><div class="line">outer()  <span class="comment"># 1</span></div></pre></td></tr></table></figure>
+<h3 id="将函数作为参数"><a href="#将函数作为参数" class="headerlink" title="将函数作为参数"></a>将函数作为参数</h3><p><code>Python</code>中一切皆对象，函数也不例外。所以说可以将函数作为参数传递给另外一个函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> x + y</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sub</span><span class="params">(x, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> x - y</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">apply</span><span class="params">(func, x, y)</span>:</span></div><div class="line">    <span class="keyword">return</span> func(x, y)</div><div class="line"></div><div class="line"><span class="keyword">print</span> apply(add, <span class="number">2</span>, <span class="number">1</span>)  <span class="comment"># 3</span></div><div class="line"><span class="keyword">print</span> apply(sub, <span class="number">2</span>, <span class="number">1</span>)  <span class="comment"># 1</span></div></pre></td></tr></table></figure>
+<h3 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包"></a>什么是闭包</h3><p><code>Python</code>支持<code>函数闭包</code>的特性，通俗来讲就是嵌套定义在<code>非全局作用域</code>里边的函数能够记住它在被定义的时候的命名空间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">()</span>:</span></div><div class="line">        <span class="keyword">print</span> x</div><div class="line">    <span class="keyword">return</span> inner</div><div class="line"></div><div class="line">print1 = outer(<span class="number">1</span>)</div><div class="line">print2 = outer(<span class="number">2</span>)</div><div class="line">print1()  <span class="comment"># 1</span></div><div class="line">print2()  <span class="comment"># 2</span></div></pre></td></tr></table></figure>
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><p>装饰器其实就是一个闭包，把一个函数当做参数然后返回一个函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(func)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">()</span>:</span></div><div class="line">        ret = func()</div><div class="line">        <span class="keyword">return</span> ret + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> inner</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="number">1</span></div><div class="line"></div><div class="line">result = outer(foo)</div><div class="line"><span class="keyword">print</span> result()</div></pre></td></tr></table></figure>
+<p>可以通过更加简化的方式来替代传递函数参数的写法，使用<code>@</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">result = outer(foo)</div></pre></td></tr></table></figure>
+<p>可以替代为:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@outer</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>两者结果没有任何的区别，只不过使用<code>Python</code>的语法糖显得更加优雅一些。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(func)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">()</span>:</span></div><div class="line">        ret = func()</div><div class="line">        <span class="keyword">return</span> ret + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> inner</div><div class="line"></div><div class="line"><span class="meta">@outer</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="number">1</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> foo()</div></pre></td></tr></table></figure>
+<p>简单来讲，我们可以理解为<code>outer</code>接收的是函数的地址，而<code>inner</code>接收的是<code>outer</code>接收的函数的参数。</p>
+<p>被装饰的函数如果想要传值，必须保证和闭包的函数的形参保持一致。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(func)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(x)</span>:</span></div><div class="line">        ret = func(x)</div><div class="line">        <span class="keyword">return</span> ret + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> inner</div><div class="line"></div><div class="line"><span class="meta">@outer</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">return</span> x</div><div class="line"></div><div class="line"><span class="keyword">print</span> foo(<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>如果要闭包内的函数接收任意参数列表，可以使用<code>*args, **kwargs</code>形式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">(func)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(*args, **kwargs)</span>:</span></div><div class="line">        ret = func(*args, **kwargs)</div><div class="line">        <span class="keyword">return</span> ret + <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> inner</div><div class="line"></div><div class="line"><span class="meta">@outer</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(a, b)</span>:</span></div><div class="line">    <span class="keyword">return</span> a + b</div><div class="line"></div><div class="line"><span class="keyword">print</span> foo(<span class="number">1</span>, b=<span class="number">3</span>)  <span class="comment"># 5</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/14/Python-2-迭代器-生成器/" rel="next" title="[Python 2] Python 迭代器和生成器">
+                <i class="fa fa-chevron-left"></i> [Python 2] Python 迭代器和生成器
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/9565828?v=3&u=38c74edce4a8f3f5c92fb238bb23673b369d33b1&s=400"
+               alt="DMM" />
+          <p class="site-author-name" itemprop="name">DMM</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mydevops" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包"><span class="nav-number">1.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将函数作为参数"><span class="nav-number">1.1.</span> <span class="nav-text">将函数作为参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是闭包"><span class="nav-number">1.2.</span> <span class="nav-text">什么是闭包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰器"><span class="nav-number">2.</span> <span class="nav-text">装饰器</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DMM</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
