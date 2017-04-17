@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="Python主要分为两大派系Python 2系列和Python 3系列，虽然Python 2以及Python 3 Python社区的积极维护中，但是Python 2的功能开发已经被冻结，只会进行bug修复、安全增强以及移植等工作，以便于开发者能够顺利的从Python 2迁移到Python 3。2to3与six等工具都可以使Python 2的代码转换为Python 3的代码上，但是并不推荐使用。">
+<meta name="description" content="数据结构简单来讲就是元素与元素之间的关系。一般情况下我们把数据结构分为逻辑结构以及物理结构。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Effective Python 01] 关于 Python 版本的选择">
-<meta property="og:url" content="http://yoursite.com/2017/03/01/Effective-Python-01-关于-Python-版本的选择/index.html">
+<meta property="og:title" content="[Data Structure 01] 浅谈数据结构">
+<meta property="og:url" content="http://yoursite.com/2017/04/17/数据结构01-浅谈数据结构/index.html">
 <meta property="og:site_name" content="DMM">
-<meta property="og:description" content="Python主要分为两大派系Python 2系列和Python 3系列，虽然Python 2以及Python 3 Python社区的积极维护中，但是Python 2的功能开发已经被冻结，只会进行bug修复、安全增强以及移植等工作，以便于开发者能够顺利的从Python 2迁移到Python 3。2to3与six等工具都可以使Python 2的代码转换为Python 3的代码上，但是并不推荐使用。">
-<meta property="og:updated_time" content="2017-03-15T12:31:16.000Z">
+<meta property="og:description" content="数据结构简单来讲就是元素与元素之间的关系。一般情况下我们把数据结构分为逻辑结构以及物理结构。">
+<meta property="og:updated_time" content="2017-04-17T13:12:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[Effective Python 01] 关于 Python 版本的选择">
-<meta name="twitter:description" content="Python主要分为两大派系Python 2系列和Python 3系列，虽然Python 2以及Python 3 Python社区的积极维护中，但是Python 2的功能开发已经被冻结，只会进行bug修复、安全增强以及移植等工作，以便于开发者能够顺利的从Python 2迁移到Python 3。2to3与six等工具都可以使Python 2的代码转换为Python 3的代码上，但是并不推荐使用。">
+<meta name="twitter:title" content="[Data Structure 01] 浅谈数据结构">
+<meta name="twitter:description" content="数据结构简单来讲就是元素与元素之间的关系。一般情况下我们把数据结构分为逻辑结构以及物理结构。">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> [Effective Python 01] 关于 Python 版本的选择 | DMM </title>
+  <title> [Data Structure 01] 浅谈数据结构 | DMM </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -233,7 +233,7 @@
             
             
               
-                [Effective Python 01] 关于 Python 版本的选择
+                [Data Structure 01] 浅谈数据结构
               
             
           </h1>
@@ -245,8 +245,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2017-03-01T17:00:04+08:00" content="2017-03-01">
-              2017-03-01
+            <time itemprop="dateCreated" datetime="2017-04-17T21:00:00+08:00" content="2017-04-17">
+              2017-04-17
             </time>
           </span>
 
@@ -259,8 +259,8 @@
               <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/structure/" itemprop="url" rel="index">
+                    <span itemprop="name">structure</span>
                   </a>
                 </span>
 
@@ -292,26 +292,21 @@
       
 
       
-        <p><code>Python</code>主要分为两大派系<code>Python 2</code>系列和<code>Python 3</code>系列，虽然<code>Python 2</code>以及<code>Python 3</code> <code>Python</code>社区的积极维护中，但是<code>Python 2</code>的功能开发已经被冻结，只会进行<code>bug</code>修复、安全增强以及移植等工作，以便于开发者能够顺利的从<code>Python 2</code>迁移到<code>Python 3</code>。<code>2to3</code>与<code>six</code>等工具都可以使<code>Python 2</code>的代码转换为<code>Python 3</code>的代码上，但是并不推荐使用。</p>
-<a id="more"></a>
-<p><code>Python 3</code>经常会添加新功能并提供改进，而这些功能与改进并不会兼容<code>Python 2</code>。并且绝大部分的开源代码块都兼容<code>Python 3</code>，所以说希望大家能够逐渐的转向<code>Python 3</code>。</p>
-<p>关于<code>Python</code>的版本选择上，应该很多人都会有疑惑，很多操作系统中都默认安装了<code>Python</code>，运行<code>Python</code>的默认命令是<code>python</code>。可以使用<code>--version</code>或者<code>-V</code>参数来确定<code>Python</code>的版本。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ python --version</div><div class="line">Python 2.7.10</div></pre></td></tr></table></figure>
-<p><code>Python</code>的解释器有很多种，<code>CPython</code>、<code>Jython</code>以及<code>PyPy</code>等，我们平常所说的<code>Python</code>都是默认指的是<code>CPython</code>。</p>
-<h1 id="Python-2-和-Python-3-的简要区别"><a href="#Python-2-和-Python-3-的简要区别" class="headerlink" title="Python 2 和 Python 3 的简要区别"></a>Python 2 和 Python 3 的简要区别</h1><p>简单列举几个<code>Python 2</code>和<code>Python 3</code>的几点区别，来试试手<code>Python 3</code>的魅力。</p>
-<h2 id="print函数"><a href="#print函数" class="headerlink" title="print函数"></a>print函数</h2><p><code>Python 2</code>中的<code>print</code>语句被<code>Python 3</code>中的<code>print()</code>函数取代，所以说在<code>Python 3</code>中必须使用括号将要输出的内容括起来。</p>
-<p><code>Python 2</code>中的<code>print</code>语句。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'Hello,'</span>, <span class="string">'World'</span></div><div class="line"><span class="keyword">print</span> <span class="string">'Hello, World'</span></div><div class="line">print(<span class="string">'Hello, World'</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">'Hello, World'</span>, <span class="comment"># 如果想要去掉 print 函数自动加的换行符，可以使用 , 结尾</span></div></pre></td></tr></table></figure>
-<p><code>Python 3</code>中的<code>print()</code>函数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Hello,'</span>, <span class="string">'World'</span>)</div><div class="line">print(<span class="string">'Hello, World'</span>)</div><div class="line">print(<span class="string">'Hello, World'</span>, end=<span class="string">""</span>) <span class="comment"># 等同于 Python 2 中 , 结尾的黑魔法</span></div></pre></td></tr></table></figure>
-<p>需要注意的是<code>Python 2</code>中，通常情况下带不带括号输出没有区别，但如果在圆括号中同时输出多个对象时，就会创建一个元祖，因为<code>Python 2</code>中<code>print</code>是一个局域，而不是函数调用。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">print(<span class="string">'Hello'</span>, <span class="string">'World'</span>)</div><div class="line"><span class="comment"># Python 2 输出：('Hello', 'World')</span></div><div class="line"><span class="comment"># Python 3 输出：Hello World</span></div></pre></td></tr></table></figure>
-<h2 id="整数除法"><a href="#整数除法" class="headerlink" title="整数除法"></a>整数除法</h2><p><code>Python 2</code>中的整数除法会自动截断小数点后的小数点，返回一个整数，如果想要得到正确的结果有两种解决方法。</p>
-<p>第一：使除数或者被除数其中一个或者全部变成浮点数。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>     <span class="comment"># 输出：3 / 2 = 1</span></div><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span> <span class="comment"># 输出：3 / 2.0 = 1.5</span></div></pre></td></tr></table></figure>
-<p>第二：使用<code>from __future__ import division</code>来使用<code>Python 3</code>的除法。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</div><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2 ='</span>, <span class="number">3</span> / <span class="number">2</span>     <span class="comment"># 输出：3 / 2 = 1.5</span></div><div class="line"><span class="keyword">print</span> <span class="string">'3 / 2.0 ='</span>, <span class="number">3</span> / <span class="number">2.0</span> <span class="comment"># 输出：3 / 2.0 = 1.5</span></div></pre></td></tr></table></figure>
-<p>这一切在<code>Python 3</code>中都变得很美好，可以直接使用正常的除法了。</p>
+        <p>数据结构简单来讲就是元素与元素之间的关系。一般情况下我们把数据结构分为逻辑结构以及物理结构。<br><a id="more"></a></p>
+<h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p>逻辑结构指的是数据元素与数据元素之间的关系。</p>
+<p>逻辑结构的四种表现形式：</p>
+<ol>
+<li>集合结构：集合结构中的数据元素除了同属于一个集合外，它们之前没有任何关系。</li>
+<li>线性结构：线性结构中的数据元素之间的关系是一对一的关系。</li>
+<li>树形结构：树形结构中数据元素之间存在一种一对多的层级关系。</li>
+<li>图形结构：图形结构的数据元素是多对多的关系。</li>
+</ol>
+<h3 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h3><p>物理结构指的是逻辑机构在计算机中的存储形式。</p>
+<p>根据物理结构的定义，我们实际上研究的就是如何把数据元素存储到计算机的存储器中，存储器主要是针对内存而言，硬盘、光盘等外部存储器的数据通常用文件结构来描述。</p>
+<h4 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h4><p>数据元素的存储结构形式有两种：顺序存储和链式存储。</p>
+<h5 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h5><p>把数据存储在地址连续的存储单元里，其数据间的逻辑关系和物理关系是一致的。</p>
+<h5 id="链式存储"><a href="#链式存储" class="headerlink" title="链式存储"></a>链式存储</h5><p>顺序存储在某些情况下并不合理，过于死板。链式存储结构把数据元素存放在任意的存储单元中，这组存储单元可以是连续的，也可以是不连续的。</p>
+<p>链式存储结构的物理关系不能够反应出逻辑关系，所以说需要使用一个指针来存储数据元素的地址，通过这个地址来找到对应的数据。前一个数据记录下一个数据的指针。</p>
 
       
     </div>
@@ -336,17 +331,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/01/Python-2-Python-多进程/" rel="next" title="[Python 2] Python 多进程">
-                <i class="fa fa-chevron-left"></i> [Python 2] Python 多进程
+              <a href="/2017/04/15/Python-2-Python-闭包/" rel="next" title="[Python 2] Python 闭包">
+                <i class="fa fa-chevron-left"></i> [Python 2] Python 闭包
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/18/Python-2-Python-协程/" rel="prev" title="[Python 2] Python 协程">
-                [Python 2] Python 协程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -464,7 +455,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-2-和-Python-3-的简要区别"><span class="nav-number">1.</span> <span class="nav-text">Python 2 和 Python 3 的简要区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#print函数"><span class="nav-number">1.1.</span> <span class="nav-text">print函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数除法"><span class="nav-number">1.2.</span> <span class="nav-text">整数除法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑结构"><span class="nav-number">1.</span> <span class="nav-text">逻辑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理结构"><span class="nav-number">2.</span> <span class="nav-text">物理结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#存储结构"><span class="nav-number">2.1.</span> <span class="nav-text">存储结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#顺序存储"><span class="nav-number">2.1.1.</span> <span class="nav-text">顺序存储</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#链式存储"><span class="nav-number">2.1.2.</span> <span class="nav-text">链式存储</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>
