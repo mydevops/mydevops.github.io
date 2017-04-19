@@ -1,0 +1,622 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="算法的时间复杂度指的就是算法的运行时间，空间复杂度指的就是算法所需的空间，侧重点基本在于时间复杂度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Data Structure 03] 时间复杂度和空间复杂度">
+<meta property="og:url" content="http://yoursite.com/2017/04/19/数据结构03-时间复杂度和空间复杂度/index.html">
+<meta property="og:site_name" content="DMM">
+<meta property="og:description" content="算法的时间复杂度指的就是算法的运行时间，空间复杂度指的就是算法所需的空间，侧重点基本在于时间复杂度。">
+<meta property="og:updated_time" content="2017-04-19T14:23:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Data Structure 03] 时间复杂度和空间复杂度">
+<meta name="twitter:description" content="算法的时间复杂度指的就是算法的运行时间，空间复杂度指的就是算法所需的空间，侧重点基本在于时间复杂度。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+  <title> [Data Structure 03] 时间复杂度和空间复杂度 | DMM </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">DMM</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-python">
+          <a href="/categories/python/" rel="section">
+            
+            Python
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-golang">
+          <a href="/categories/golang/" rel="section">
+            
+            Golang
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-structure">
+          <a href="/categories/structure/" rel="section">
+            
+            Data Structure
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [Data Structure 03] 时间复杂度和空间复杂度
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-04-19T22:00:00+08:00" content="2017-04-19">
+              2017-04-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/structure/" itemprop="url" rel="index">
+                    <span itemprop="name">structure</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>算法的时间复杂度指的就是算法的运行时间，空间复杂度指的就是算法所需的空间，侧重点基本在于时间复杂度。<br><a id="more"></a><br>算法效率高一般情况下指的是算法的执行时间，计算算法的执行时间主要有两种方式。</p>
+<h4 id="事后统计方法"><a href="#事后统计方法" class="headerlink" title="事后统计方法"></a>事后统计方法</h4><p>我们可以简单的认为就是把算法运行一遍，然后计算运行的时间，从而进行计算效率。这个方法最大的缺陷就是需要先运行算法然后再计算时间，比较耗时，并不推荐使用。</p>
+<h4 id="事前分析估算方法"><a href="#事前分析估算方法" class="headerlink" title="事前分析估算方法"></a>事前分析估算方法</h4><p>在计算机程序编写前，依据统计方法对算法进行估算。</p>
+<h4 id="程序耗时的几个主要因素"><a href="#程序耗时的几个主要因素" class="headerlink" title="程序耗时的几个主要因素"></a>程序耗时的几个主要因素</h4><ol>
+<li>算法采用的策略</li>
+<li>编译产生的代码质量(主要指的是编译器的优化策略)</li>
+<li>输入量的大小</li>
+<li>机器执行指令的速度。</li>
+</ol>
+<p>总结来看，除了计算机硬件因素，一个程序的运行时间主要依赖于算法的好坏和输入量的大小。</p>
+<p>计算<code>1</code>到<code>100</code>的和。</p>
+<p>正常算法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">main()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i;                 <span class="comment">// 执行   1 次</span></div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;           <span class="comment">// 执行   1 次</span></div><div class="line">    <span class="keyword">int</span> n   = <span class="number">100</span>;         <span class="comment">// 执行   1 次</span></div><div class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=n; i++)    <span class="comment">// 执行 n+1 次</span></div><div class="line">    &#123;</div><div class="line">        sum = sum + i;     <span class="comment">// 执行   n 次</span></div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, sum);   <span class="comment">// 执行   1 次</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>高斯算法</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">main()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;          <span class="comment">// 执行 1 次</span></div><div class="line">    <span class="keyword">int</span>   n = <span class="number">100</span>;        <span class="comment">// 执行 1 次</span></div><div class="line">    sum = (<span class="number">1</span>+n)*n/<span class="number">2</span>;      <span class="comment">// 执行 1 次</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, sum);  <span class="comment">// 执行 1 次</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>正常算法运行了<code>1+1+1+n+1+n+1=2n+5</code>次。</p>
+<p>高斯算法执行了<code>1+1+1+1=4</code>次。</p>
+<p>执行次数可以认为是<code>n</code>与<code>1</code>的差别。可见算法的好处。</p>
+<p>我们不必关心编程语言，也不关心硬件，只关心算法，我们在分析一个算法的运行时间时，重要的是把基本操作的数量和输入模式关联起来。</p>
+<h3 id="函数的渐近增长"><a href="#函数的渐近增长" class="headerlink" title="函数的渐近增长"></a>函数的渐近增长</h3><p>给定两个函数<code>f(n)</code>和<code>g(n)</code>，如果存在一个整数<code>N</code>，使得对于所有的<code>n&gt;N</code>，<code>f(n)</code>总是比<code>g(n)</code>大，那么我们说<code>f(n)</code>的增长渐近快于<code>g(n)</code>。</p>
+<p>判断一个算法的效率时，函数中的常数和其他次要项常常可以忽略不计，而更应该关注主项的阶数。</p>
+<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>算法时间复杂度的定义：在进行算法分析时，语句总的执行次数<code>T(n)</code>是关于问题规模<code>n</code>的函数，进而分析<code>T(n)</code>随<code>n</code>的变化情况并确定<code>T(n)</code>的数量级。算法的时间复杂度，也就是算法的时间量度，记作：<code>T(n) = O(f(n))</code>。它表示随问题规模<code>n</code>的增大，算法执行时间的增长率和<code>f(n)</code>的增长率相同，称作算法的渐近复杂度，简称为时间复杂度，其中<code>f(n)</code>是问题规模<code>n</code>的某个函数。</p>
+<p>简单来讲就是”执行次数等于时间”。用大写<code>O()</code>来体现算法时间复杂度的记法，我们称之为大<code>O</code>记法。一般情况下随着输入规模<code>n</code>的增大，<code>T(n)</code>增长的越慢的算法为最优算法。</p>
+<p>我们的三个求和算法的时间复杂度分别为<code>O(1)</code>、<code>O(n)</code>和<code>O(n^2)</code>。</p>
+<h4 id="常用分析算法时间复杂度的方法"><a href="#常用分析算法时间复杂度的方法" class="headerlink" title="常用分析算法时间复杂度的方法"></a>常用分析算法时间复杂度的方法</h4><ol>
+<li>用常数<code>1</code>取代运行时间中的所有加法常数。</li>
+<li>在修改后的运行次数函数中，只保留最高阶项。</li>
+<li>如果最高阶项存在且不是<code>1</code>，则去除与这个项相乘的常数。</li>
+<li>得到最后的结果就是大<code>O</code>阶。</li>
+</ol>
+<h5 id="常数阶"><a href="#常数阶" class="headerlink" title="常数阶"></a>常数阶</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">main()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> n   = <span class="number">100</span>;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"line 1\n"</span>);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"line 1\n"</span>);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"line 1\n"</span>);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"line 1\n"</span>);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"line 1\n"</span>);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"line 1\n"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据方法<code>1</code>判断出时间复杂度为<code>O(1)</code>。</p>
+<h5 id="线性阶"><a href="#线性阶" class="headerlink" title="线性阶"></a>线性阶</h5><p>一般含有非嵌套循环(单循环)涉及线性阶，线性阶就是随着问题规模<code>n</code>的扩大，对应计算次数呈直线增长。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">main()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> n   = <span class="number">100</span>;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;n; i++)</div><div class="line">    &#123;</div><div class="line">       sum = sum + i; </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它的循环的时间复杂度为<code>O(n)</code>，因为循环体中的代码需要执行<code>n</code>次。</p>
+<h5 id="平方阶"><a href="#平方阶" class="headerlink" title="平方阶"></a>平方阶</h5><p><code>n</code>等于<code>100</code>，也就是说外层循环每执行一次，内层循环就执行<code>100</code>次，那总共程序想要从这两个循环出来，需要执行<code>100^2</code>次，也就是<code>n</code>的平方。所以时间复杂度为<code>O(n^2)</code>。</p>
+<p>如果三层循环时间复杂度就是<code>O(n^3)</code>，循环的时间复杂度等于循环体的复杂度乘以该循环运行的次数。</p>
+<h5 id="对数阶"><a href="#对数阶" class="headerlink" title="对数阶"></a>对数阶</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line">main()</div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> n = <span class="number">100</span>;</div><div class="line">    <span class="keyword">while</span>(i&lt;n)</div><div class="line">    &#123;</div><div class="line">        i = i * <span class="number">2</span>; </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由于每次<code>i * 2</code>后就更加接近<code>n</code>，假设有<code>x</code>个<code>2</code>相乘后大于或等于<code>n</code>，则会退出循环。由<code>2^x = n</code>得到<code>x = log(2)n</code>，所以这个循环的时间复杂度为<code>O(logn)</code>。</p>
+<h4 id="常见的时间复杂度耗费时间排序"><a href="#常见的时间复杂度耗费时间排序" class="headerlink" title="常见的时间复杂度耗费时间排序"></a>常见的时间复杂度耗费时间排序</h4><p><code>O(1) &lt; O(logn) &lt; O(n) &lt; O(nlogin) &lt; O(n^2) &lt; O(n^3) &lt; O(2^n) &lt; O(n!) &lt; O(n^n)</code>。</p>
+<h3 id="空间复杂度"><a href="#空间复杂度" class="headerlink" title="空间复杂度"></a>空间复杂度</h3><p>我们在进行算法设计的时候，完全可以用空间来换取时间。</p>
+<p>算法的空间复杂度通过计算算法所需的存储空间实现。算法的空间复杂度的计算公式记作<code>S(n)=O(f(n))</code>，其中<code>n</code>为问题规模，<code>f(n)</code>为语句关于<code>n</code>所在存储空间的函数。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/17/数据结构02-浅谈算法/" rel="next" title="[Data Structure 02] 浅谈算法">
+                <i class="fa fa-chevron-left"></i> [Data Structure 02] 浅谈算法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/9565828?v=3&u=38c74edce4a8f3f5c92fb238bb23673b369d33b1&s=400"
+               alt="DMM" />
+          <p class="site-author-name" itemprop="name">DMM</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mydevops" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#事后统计方法"><span class="nav-number">1.</span> <span class="nav-text">事后统计方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事前分析估算方法"><span class="nav-number">2.</span> <span class="nav-text">事前分析估算方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序耗时的几个主要因素"><span class="nav-number">3.</span> <span class="nav-text">程序耗时的几个主要因素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数的渐近增长"><span class="nav-number"></span> <span class="nav-text">函数的渐近增长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-number"></span> <span class="nav-text">时间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用分析算法时间复杂度的方法"><span class="nav-number">1.</span> <span class="nav-text">常用分析算法时间复杂度的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#常数阶"><span class="nav-number">1.1.</span> <span class="nav-text">常数阶</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#线性阶"><span class="nav-number">1.2.</span> <span class="nav-text">线性阶</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#平方阶"><span class="nav-number">1.3.</span> <span class="nav-text">平方阶</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对数阶"><span class="nav-number">1.4.</span> <span class="nav-text">对数阶</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的时间复杂度耗费时间排序"><span class="nav-number">2.</span> <span class="nav-text">常见的时间复杂度耗费时间排序</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空间复杂度"><span class="nav-number"></span> <span class="nav-text">空间复杂度</span></a></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DMM</span>
+</div>
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
