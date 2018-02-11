@@ -415,29 +415,6 @@
 
     <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-  <a class="jiathis_button_tsina"></a>
-  <a class="jiathis_button_tqq"></a>
-  <a class="jiathis_button_weixin"></a>
-  <a class="jiathis_button_cqq"></a>
-  <a class="jiathis_button_douban"></a>
-  <a class="jiathis_button_renren"></a>
-  <a class="jiathis_button_qzone"></a>
-  <a class="jiathis_button_kaixin001"></a>
-  <a class="jiathis_button_copy"></a>
-  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
-  <a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-  var jiathis_config={
-    hideMore:false
-  }
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
-<!-- JiaThis Button END -->
-
-      
     </div>
   </div>
 
@@ -470,17 +447,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://avatars2.githubusercontent.com/u/9565828?v=3&u=38c74edce4a8f3f5c92fb238bb23673b369d33b1&s=400"
@@ -535,17 +503,6 @@
       </section>
 
       
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Process"><span class="nav-text">Process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#init-target-None-name-None-args-kwargs"><span class="nav-text">__init__(target=None, name=None, args=(), kwargs={})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#run"><span class="nav-text">run()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start"><span class="nav-text">start()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join-timeout"><span class="nav-text">join([timeout])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#name"><span class="nav-text">name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#is-alive"><span class="nav-text">is_alive()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#daemon"><span class="nav-text">daemon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pid"><span class="nav-text">pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exitcode"><span class="nav-text">exitcode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#terminate"><span class="nav-text">terminate()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#active-children"><span class="nav-text">active_children()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cpu-count"><span class="nav-text">cpu_count()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#current-process"><span class="nav-text">current_process()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程同步"><span class="nav-text">进程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BoundedSemaphore-value"><span class="nav-text">BoundedSemaphore([value])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event"><span class="nav-text">Event</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Condition-lock"><span class="nav-text">Condition([lock])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lock"><span class="nav-text">Lock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RLock"><span class="nav-text">RLock</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程间通信"><span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Queue-maxsize"><span class="nav-text">Queue([maxsize])</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#qsize"><span class="nav-text">qsize()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#empty"><span class="nav-text">empty()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#full"><span class="nav-text">full()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put-obj-block-timeout"><span class="nav-text">put(obj[, block[, timeout]])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put-nowait-obj"><span class="nav-text">put_nowait(obj)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-block-timeout"><span class="nav-text">get([block[, timeout]])</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get-nowait"><span class="nav-text">get_nowait()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#close"><span class="nav-text">close()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join-thread"><span class="nav-text">join_thread()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cancel-join-thread"><span class="nav-text">cancel_join_thread()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SimpleQueue"><span class="nav-text">SimpleQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#empty-1"><span class="nav-text">empty()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get"><span class="nav-text">get()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#put-item"><span class="nav-text">put(item)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JoinableQueue-maxsize"><span class="nav-text">JoinableQueue([maxsize])</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#task-done"><span class="nav-text">task_done()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join"><span class="nav-text">join()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pipe-duples"><span class="nav-text">Pipe([duples])</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#send-obj"><span class="nav-text">send(obj)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recv"><span class="nav-text">recv()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fileno"><span class="nav-text">fileno()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#close-1"><span class="nav-text">close()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#poll-timeout"><span class="nav-text">poll([timeout])</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程间共享数据"><span class="nav-text">进程间共享数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Manager"><span class="nav-text">Manager()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dict"><span class="nav-text">dict()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list"><span class="nav-text">list()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程池"><span class="nav-text">进程池</span></a></li></ol></div>
-            
-          </div>
-        </section>
-      
 
     </div>
   </aside>
@@ -560,7 +517,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
