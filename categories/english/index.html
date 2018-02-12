@@ -84,16 +84,12 @@
 
 
 
-<meta name="description" content="程序设计 = 数据结构 + 算法。好的数据结构导致好的算法。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="[Data Structure 02] 浅谈算法">
-<meta property="og:url" content="http://yoursite.com/2017/04/17/数据结构02-浅谈算法/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DMM">
+<meta property="og:url" content="http://yoursite.com/categories/english/index.html">
 <meta property="og:site_name" content="DMM">
-<meta property="og:description" content="程序设计 = 数据结构 + 算法。好的数据结构导致好的算法。">
-<meta property="og:updated_time" content="2017-04-17T13:58:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[Data Structure 02] 浅谈算法">
-<meta name="twitter:description" content="程序设计 = 数据结构 + 算法。好的数据结构导致好的算法。">
+<meta name="twitter:title" content="DMM">
 
 
 
@@ -111,7 +107,7 @@
   };
 </script>
 
-  <title> [Data Structure 02] 浅谈算法 | DMM </title>
+  <title> Category: english | DMM </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -132,7 +128,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-right page-post-detail ">
+  <div class="container one-collumn sidebar-position-right  ">
     <div class="headband"></div>
 
     <a href="https://github.com/mydevops"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -213,172 +209,47 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                [Data Structure 02] 浅谈算法
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2017-04-17T22:00:00+08:00" content="2017-04-17">
-              2017-04-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/structure/" itemprop="url" rel="index">
-                    <span itemprop="name">structure</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>程序设计 = 数据结构 + 算法。好的数据结构导致好的算法。<br><a id="more"></a></p>
-<p>算法简单来讲就是计算的方法。</p>
-<p>比如要计算<code>1</code>到<code>100</code>的和，比如著名的数学家高斯，计算<code>1</code>到<code>100</code>的和是计算<code>1+100</code>、<code>2+99</code>、<code>3+98...</code>共计五十对<code>101</code>。得到答案<code>5050</code>。</p>
-<p>虽然计算机完成<code>1</code>到<code>100</code>的和是非常的快的，但是把<code>100</code>替换成一千万、或者一个亿的话人脑是可以比计算机快的，所以算法还是非常的重要的。</p>
-<h3 id="算法的五个基本特征"><a href="#算法的五个基本特征" class="headerlink" title="算法的五个基本特征"></a>算法的五个基本特征</h3><p>输入、输出、有穷性、确定性和可行性。</p>
-<h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><p>算法具有零个或者多个输入的参数。</p>
-<h4 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h4><p>算法至少有一个或者多个输出。输出的表现形式可以是打印、也可以是返回一个或多个值。</p>
-<h4 id="有穷性"><a href="#有穷性" class="headerlink" title="有穷性"></a>有穷性</h4><p>算法在执行有限的步骤后，自动结束而不会出现死循环，并且每一个步骤在可接受的时间内完成。</p>
-<h4 id="确定性"><a href="#确定性" class="headerlink" title="确定性"></a>确定性</h4><ol>
-<li>算法在一定条件下只有一条执行路径，相同的输入只能有唯一的输出结果。</li>
-<li>算法的每个步骤都应该被精确定义而无歧义。</li>
-</ol>
-<h4 id="可行性"><a href="#可行性" class="headerlink" title="可行性"></a>可行性</h4><p>算法的每一步都必须是可行的，也就是说每一步都能沟通执行有限次数完成。</p>
-<h3 id="算法的设计要求"><a href="#算法的设计要求" class="headerlink" title="算法的设计要求"></a>算法的设计要求</h3><h4 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h4><p>算法的正确性是指算法至少应该具有输入、输出和加工处理无歧义性、能正确反映问题的需求、能够得到问题正确答案。</p>
-<ol>
-<li>没有语法错误；</li>
-<li>对于合法输入能够产生满足要求的输出；</li>
-<li>对于非法输入能够产生满足规格的说明；</li>
-<li>对于各种奇葩的测试输入都有满足要求的输出结果。</li>
-</ol>
-<h4 id="可读性"><a href="#可读性" class="headerlink" title="可读性"></a>可读性</h4><p>算法一定要有良好的可读性。</p>
-<h4 id="健壮性"><a href="#健壮性" class="headerlink" title="健壮性"></a>健壮性</h4><p>当输入数据不合法时，算法也能够做出相关处理，而不是产生异常、崩溃或莫名其妙的结果。</p>
-<h4 id="理想性"><a href="#理想性" class="headerlink" title="理想性"></a>理想性</h4><p>执行速度快和占用空间少。</p>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>算法讲究条条大路通罗马，一个问题会有<code>N</code>多种算法来解决。所谓的算法解决的问题，没有标准答案。</p>
-
-      
+  <section id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        english
+        <small>Category</small>
+      </h2>
     </div>
 
-    <div>
-      
-        
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        <div>
     
-        <div style="text-align:center;font-size:14px;"> ❤  最怕你一生碌碌无为，到老还称平凡最可贵 ❤  </div>
-    
-</div>
-
-      
-    </div>
-
-    <footer class="post-footer">
       
 
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/04/17/数据结构01-浅谈数据结构/" rel="next" title="[Data Structure 01] 浅谈数据结构">
-                <i class="fa fa-chevron-left"></i> [Data Structure 01] 浅谈数据结构
-              </a>
-            
-          </div>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/19/数据结构03-时间复杂度和空间复杂度/" rel="prev" title="[Data Structure 03] 时间复杂度和空间复杂度">
-                [Data Structure 03] 时间复杂度和空间复杂度 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2018/02/12/English-Lv1-Lensson001-Names，Greetings-and-Introduction/" itemprop="url">
+              
+                <span itemprop="name">[English Lv1-Lensson001] Names，Greetings and Introduction</span>
+              
+            </a>
+        
+      </h1>
 
-      
-      
-    </footer>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-02-12T11:47:25+08:00"
+              content="2018-02-12" >
+          02-12
+        </time>
+      </div>
+
+    </header>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+
 
 
           </div>
@@ -386,10 +257,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -549,10 +416,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 
