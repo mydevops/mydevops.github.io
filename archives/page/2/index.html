@@ -84,16 +84,12 @@
 
 
 
-<meta name="description" content="数据结构简单来讲就是元素与元素之间的关系。一般情况下我们把数据结构分为逻辑结构以及物理结构。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="[Data Structure 01] 浅谈数据结构">
-<meta property="og:url" content="http://yoursite.com/2017/04/17/数据结构01-浅谈数据结构/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DMM">
+<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
 <meta property="og:site_name" content="DMM">
-<meta property="og:description" content="数据结构简单来讲就是元素与元素之间的关系。一般情况下我们把数据结构分为逻辑结构以及物理结构。">
-<meta property="og:updated_time" content="2017-04-17T13:12:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[Data Structure 01] 浅谈数据结构">
-<meta name="twitter:description" content="数据结构简单来讲就是元素与元素之间的关系。一般情况下我们把数据结构分为逻辑结构以及物理结构。">
+<meta name="twitter:title" content="DMM">
 
 
 
@@ -111,7 +107,7 @@
   };
 </script>
 
-  <title> [Data Structure 01] 浅谈数据结构 | DMM </title>
+  <title> Archive | DMM </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -132,7 +128,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-right page-post-detail ">
+  <div class="container one-collumn sidebar-position-right  page-archive  ">
     <div class="headband"></div>
 
     <a href="https://github.com/mydevops"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
@@ -213,163 +209,223 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  <section id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                [Data Structure 01] 浅谈数据结构
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2017-04-17T21:00:00+08:00" content="2017-04-17">
-              2017-04-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/structure/" itemprop="url" rel="index">
-                    <span itemprop="name">structure</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
+    <span class="archive-page-counter">
       
       
-
-      
-        <p>数据结构简单来讲就是元素与元素之间的关系。一般情况下我们把数据结构分为逻辑结构以及物理结构。<br><a id="more"></a></p>
-<h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p>逻辑结构指的是数据元素与数据元素之间的关系。</p>
-<p>逻辑结构的四种表现形式：</p>
-<ol>
-<li>集合结构：集合结构中的数据元素除了同属于一个集合外，它们之前没有任何关系。</li>
-<li>线性结构：线性结构中的数据元素之间的关系是一对一的关系。</li>
-<li>树形结构：树形结构中数据元素之间存在一种一对多的层级关系。</li>
-<li>图形结构：图形结构的数据元素是多对多的关系。</li>
-</ol>
-<h3 id="物理结构"><a href="#物理结构" class="headerlink" title="物理结构"></a>物理结构</h3><p>物理结构指的是逻辑机构在计算机中的存储形式。</p>
-<p>根据物理结构的定义，我们实际上研究的就是如何把数据元素存储到计算机的存储器中，存储器主要是针对内存而言，硬盘、光盘等外部存储器的数据通常用文件结构来描述。</p>
-<h4 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h4><p>数据元素的存储结构形式有两种：顺序存储和链式存储。</p>
-<h5 id="顺序存储"><a href="#顺序存储" class="headerlink" title="顺序存储"></a>顺序存储</h5><p>把数据存储在地址连续的存储单元里，其数据间的逻辑关系和物理关系是一致的。</p>
-<h5 id="链式存储"><a href="#链式存储" class="headerlink" title="链式存储"></a>链式存储</h5><p>顺序存储在某些情况下并不合理，过于死板。链式存储结构把数据元素存放在任意的存储单元中，这组存储单元可以是连续的，也可以是不连续的。</p>
-<p>链式存储结构的物理关系不能够反应出逻辑关系，所以说需要使用一个指针来存储数据元素的地址，通过这个地址来找到对应的数据。前一个数据记录下一个数据的指针。</p>
-
-      
-    </div>
-
-    <div>
       
         
       
-    </div>
+      Um..! 14 posts in total. Keep on posting.
+    </span>
 
-    <div>
+    
+
+      
+      
+      
+
       
         
-
-      
-    </div>
-
-    <div>
-      
-        <div>
-    
-        <div style="text-align:center;color:red;font-size:14px;"> ❤  最怕你一生碌碌无为，到老还称平凡最可贵 ❤  </div>
-    
-</div>
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/04/15/Python-2-Python-装饰器/" rel="next" title="[Python 2] Python 装饰器">
-                <i class="fa fa-chevron-left"></i> [Python 2] Python 装饰器
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/17/数据结构02-浅谈算法/" rel="prev" title="[Data Structure 02] 浅谈算法">
-                [Data Structure 02] 浅谈算法 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2018">2018</h2>
         </div>
       
+      
 
       
-      
-    </footer>
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2018/02/12/English-Lv1-Lesson003-Meeting-New-Friends/" itemprop="url">
+              
+                <span itemprop="name">[English Lv1-Lesson003] Meeting New Friends</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-02-12T16:08:46+08:00"
+              content="2018-02-12" >
+          02-12
+        </time>
+      </div>
+
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
+    
+
       
-    </div>
-  </div>
+      
+      
+
+      
+      
+
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2018/02/12/English-Lv1-Lesson002-He-and-She-md/" itemprop="url">
+              
+                <span itemprop="name">[English Lv1-Lesson002] He and She</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-02-12T15:28:32+08:00"
+              content="2018-02-12" >
+          02-12
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+    
+
+      
+      
+      
+
+      
+      
+
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2018/02/12/English-Lv1-Lesson001-Names-Greetings-and-Introduction/" itemprop="url">
+              
+                <span itemprop="name">[English Lv1-Lesson001] Names，Greetings and Introduction</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-02-12T11:47:25+08:00"
+              content="2018-02-12" >
+          02-12
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+    
+
+      
+      
+      
+
+      
+        
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
+        </div>
+      
+      
+
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2017/04/15/Python-2-Python-装饰器/" itemprop="url">
+              
+                <span itemprop="name">[Python 2] Python 装饰器</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-04-15T16:00:04+08:00"
+              content="2017-04-15" >
+          04-15
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+    
+
+      
+      
+      
+
+      
+      
+
+      
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h1 class="post-title">
+        
+            <a class="post-title-link" href="/2017/04/14/Python-2-迭代器-生成器/" itemprop="url">
+              
+                <span itemprop="name">[Python 2] Python 迭代器和生成器</span>
+              
+            </a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2017-04-14T21:58:04+08:00"
+              content="2017-04-14" >
+          04-14
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+    
+
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
 
 
           </div>
@@ -377,10 +433,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -412,7 +464,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">14</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
@@ -420,7 +472,7 @@
           
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">categories</span>
               
             </div>
@@ -540,9 +592,11 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
 
 
   
