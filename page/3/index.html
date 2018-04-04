@@ -233,6 +233,125 @@
             
               
                 
+                <a class="post-title-link" href="/2017/04/14/Python-2-迭代器-生成器/" itemprop="url">
+                  [Python 2] Python 迭代器和生成器
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2017-04-14T21:58:04+08:00" content="2017-04-14">
+              2017-04-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><code>Python</code>中的可迭代对象指的是间接的使用<code>for</code>循环中的<code>iter</code>函数生成迭代器、迭代器指的是满足迭代器协议的对象，生成器是可迭代对象转换成迭代器的一种方式，生成器是一种特殊的迭代器。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/04/14/Python-2-迭代器-生成器/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2017/03/18/Python-2-Python-协程/" itemprop="url">
                   [Python 2] Python 协程
                 </a>
@@ -352,8 +471,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/03/01/Python-2-Python-多线程/" itemprop="url">
-                  [Python 2] Python 多线程
+                <a class="post-title-link" href="/2017/03/01/Effective-Python-01-关于-Python-版本的选择/" itemprop="url">
+                  [Effective Python 01] 关于 Python 版本的选择
                 </a>
               
             
@@ -414,9 +533,9 @@
 
       
         
-          <p>在<code>CPython</code>解释器中：由于<code>GIL</code>的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核<code>CPU</code>那么建议使用<code>multiprocessing</code>模块。但是<code>IO</code>密集型任务多线程仍然是一个很好的选择。<br>
+          <p><code>Python</code>主要分为两大派系<code>Python 2</code>系列和<code>Python 3</code>系列，虽然<code>Python 2</code>以及<code>Python 3</code> <code>Python</code>社区的积极维护中，但是<code>Python 2</code>的功能开发已经被冻结，只会进行<code>bug</code>修复、安全增强以及移植等工作，以便于开发者能够顺利的从<code>Python 2</code>迁移到<code>Python 3</code>。<code>2to3</code>与<code>six</code>等工具都可以使<code>Python 2</code>的代码转换为<code>Python 3</code>的代码上，但是并不推荐使用。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2017/03/01/Python-2-Python-多线程/#more" rel="contents">
+            <a class="btn" href="/2017/03/01/Effective-Python-01-关于-Python-版本的选择/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -590,8 +709,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/03/01/Effective-Python-01-关于-Python-版本的选择/" itemprop="url">
-                  [Effective Python 01] 关于 Python 版本的选择
+                <a class="post-title-link" href="/2017/03/01/Python-2-Python-多线程/" itemprop="url">
+                  [Python 2] Python 多线程
                 </a>
               
             
@@ -652,9 +771,9 @@
 
       
         
-          <p><code>Python</code>主要分为两大派系<code>Python 2</code>系列和<code>Python 3</code>系列，虽然<code>Python 2</code>以及<code>Python 3</code> <code>Python</code>社区的积极维护中，但是<code>Python 2</code>的功能开发已经被冻结，只会进行<code>bug</code>修复、安全增强以及移植等工作，以便于开发者能够顺利的从<code>Python 2</code>迁移到<code>Python 3</code>。<code>2to3</code>与<code>six</code>等工具都可以使<code>Python 2</code>的代码转换为<code>Python 3</code>的代码上，但是并不推荐使用。</p>
+          <p>在<code>CPython</code>解释器中：由于<code>GIL</code>的缘故，同一个进程内同一时刻只允许运行一个线程。如果要利用多核<code>CPU</code>那么建议使用<code>multiprocessing</code>模块。但是<code>IO</code>密集型任务多线程仍然是一个很好的选择。<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2017/03/01/Effective-Python-01-关于-Python-版本的选择/#more" rel="contents">
+            <a class="btn" href="/2017/03/01/Python-2-Python-多线程/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -733,7 +852,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">posts</span>
             </a>
           </div>
